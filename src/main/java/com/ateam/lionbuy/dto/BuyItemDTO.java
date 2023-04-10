@@ -18,7 +18,6 @@ public class BuyItemDTO {
   private String pd_name;
   private String pay;
   private LocalDateTime buy_date;
-  private Long cno;
   private String card_brand;
   private String card_style;
 }
