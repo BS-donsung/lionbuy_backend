@@ -40,9 +40,5 @@ public class UserController {
         List<UserDTO> userDTO = uService.user_all();
         return ResponseEntity.ok().body(userDTO);
     }
-    
-    @GetMapping(value = "/test")
-    public void test() {
-        
-    }
+
 }
