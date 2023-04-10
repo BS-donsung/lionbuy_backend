@@ -38,6 +38,8 @@ public class Buy_item {
 
     private String pay;
     private LocalDateTime buy_date;
+    private String card_brand;
+    private String card_style;
 
     @PrePersist
     public void PrePersist() {

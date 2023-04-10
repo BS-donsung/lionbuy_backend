@@ -26,7 +26,8 @@ public interface BuyItemService {
         .user_info(user_info)
         .product(product)
         .pay(buyItemDTO.getPay())
-        .buy_date(buyItemDTO.getBuy_date())
+        .card_brand(buyItemDTO.getCard_brand())
+        .card_style(buyItemDTO.getCard_style())
         .build();
     return buy_item;
   }
