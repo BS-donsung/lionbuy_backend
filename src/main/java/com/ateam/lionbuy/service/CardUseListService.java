@@ -12,7 +12,7 @@ public interface CardUseListService {
         .bno(buyItemdto.getBno())
         .build();
     Card_use_list card_use_list = Card_use_list.builder()
-        .buy_list(buy_item)
+        .buy_item(buy_item)
         .card_brand(buyItemdto.getCard_brand())
         .card_style(buyItemdto.getCard_style())
         .build();

@@ -27,7 +27,7 @@ public class Card_use_list {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="bno", referencedColumnName = "bno")
-    private Buy_item buy_list;
+    private Buy_item buy_item;
 
     private String card_brand;
     private String card_style;
