@@ -42,9 +42,9 @@ public class CrawlingServiceImpl implements CrawlingService{
     private CategoryRepository cRepository;
 
     @Override
-    public String getKeyword(String link) {
+    public String[] getKeyword(String link) {
         Mall mall = new Mall();
-        String name = mall.mall_parsing(link);
+        String[] name = mall.mall_parsing(link);
         return name;
     }
 
