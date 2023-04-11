@@ -1,65 +1,62 @@
 package com.ateam.lionbuy.service.shopingmall;
 
-import java.io.IOException;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 public class Mall {
     
-    public String mall_parsing(String link) {
+    public String[] mall_parsing(String link) {
         Document document;
-        Elements parsingText;
-        String keyworld;
+        String[] pd_list = new String[2];
+        String pd_name;
+        String price;
         String name = mall_name(link);
         switch(name) {
             case "11번가":
                 document = jsoup_conn(link);
-                parsingText = document.getElementsByTag("title");
-                keyworld = parsingText.text();
-                return keyworld;
+                pd_name = document.getElementsByTag("title").text();
+                price = document.select("span.value").first().text();
+                pd_list[0] = pd_name;
+                pd_list[1] = price;
+                return pd_list;
             case "옥션":
                 document = jsoup_conn(link);
-                parsingText = document.getElementsByClass("itemtit");
-                keyworld = parsingText.text();
-                return keyworld;
+                pd_name = document.getElementsByClass("itemtit").text();
+                price = document.getElementsByClass("price_real").text();
+                pd_list[0] = pd_name;
+                pd_list[1] = price;
+                return pd_list;
             case "G마켓":
                 document = jsoup_conn(link);
-                parsingText = document.getElementsByClass("itemtit");
-                keyworld = parsingText.text();
-                return keyworld;
+                pd_name = document.getElementsByClass("itemtit").text();
+                price = document.getElementsByClass("price_real").text();
+                pd_list[0] = pd_name;
+                pd_list[1] = price;
+                return pd_list;
             case "인터파크":
                 document = jsoup_conn(link); 
-                parsingText = document.getElementsByTag("title");
-                keyworld = parsingText.text().split(" - ")[0];
-                return keyworld;
-            case "쿠팡":
-                String url = link;
-                try {
-                    document = Jsoup.connect(url)
-                        .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
-                        .get();
-                    System.out.println(document.html());
-                    parsingText = document.getElementsByTag("title");
-                    keyworld = parsingText.text().split(" | ")[1];
-                    return keyworld;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                pd_name = document.getElementsByTag("title").text().split(" - ")[0];
+                // price = document.select("span.salePrice.em").text();
+                pd_list[0] = pd_name;
+                // pd_list[1] = price;
+                return pd_list;
             case "e마트":
                 document = jsoup_conn(link);
-                parsingText = document.getElementsByClass("cdtl_info_tit_name");
-                keyworld = parsingText.text();
-                return keyworld;
+                pd_name = document.getElementsByClass("cdtl_info_tit_name").text();
+                price = document.select("em.ssg_price").first().text();
+                pd_list[0] = pd_name;
+                pd_list[1] = price;
+                return pd_list;
             case "신세계몰":
                 document = jsoup_conn(link);
-                parsingText = document.getElementsByClass("cdtl_info_tit_name");
-                keyworld = parsingText.text();
-                return keyworld;
+                pd_name = document.getElementsByClass("cdtl_info_tit_name").text();
+                price = document.select("em.ssg_price").first().text();
+                pd_list[0] = pd_name;
+                pd_list[1] = price;
+                return pd_list;
         }
-        return "알지 못한 쇼핑몰입니다.";
+        return null;
     }
 
     String mall_name(String link) {

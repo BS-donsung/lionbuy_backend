@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LinkDTO {
     
-    private String link;
+    private String pd_name;
+    private String price;
 }
