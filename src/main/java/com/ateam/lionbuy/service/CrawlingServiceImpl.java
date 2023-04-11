@@ -159,7 +159,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                 String categories = "";
                                 for (int j = 0; j < 4; j++) {
                                     String col = String.format("category%dName", j+1);
-                                    categories += String.valueOf(returnMap.get(col)) + " ";
+                                    categories += String.valueOf(returnMap.get(col)) + "|";
                                 }
                                 categories += String.valueOf(returnMap.get("characterValue"));
                                 Category category = category_build(String.valueOf(returnMap.get("productTitle")), categories);
