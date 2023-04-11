@@ -121,14 +121,13 @@ public class CrawlingServiceImpl implements CrawlingService{
                             String categories = "";
                             for (int j = 0; j < 4; j++) {
                                 String col = String.format("category%dName", j+1);
-                                categories += String.valueOf(returnMap.get(col)) + " ";
+                                categories += String.valueOf(returnMap.get(col)) + "|";
                             }
+                            categories += String.valueOf(returnMap.get("characterValue"));
                             // DB에 넣을 데이터를 Entity에 넣어 디비에 저장
                             // category_build 메서드는 CrawlingService 클래스에 있음
                             Category category = category_build(String.valueOf(returnMap.get("productTitle")), categories);
                             cRepository.save(category);
-                            Category category2 = category_build(String.valueOf(returnMap.get("productTitle")), String.valueOf(returnMap.get("characterValue")));
-                            cRepository.save(category2);
 
                             // 최저가 테이블에 최저가 데이터를 넣는 코드
                             // DB에 넣을 데이터를 Entity에 넣어 디비에 저장
@@ -145,12 +144,11 @@ public class CrawlingServiceImpl implements CrawlingService{
                                 String categories = "";
                                 for (int j = 0; j < 4; j++) {
                                     String col = String.format("category%dName", j+1);
-                                    categories += String.valueOf(returnMap.get(col)) + " ";
+                                    categories += String.valueOf(returnMap.get(col)) + "|";
                                 }
+                                categories += String.valueOf(returnMap.get("characterValue"));
                                 Category category = category_build(String.valueOf(returnMap.get("productTitle")), categories);
                                 cRepository.save(category);
-                                Category category2 = category_build(String.valueOf(returnMap.get("productTitle")), String.valueOf(returnMap.get("characterValue")));
-                                cRepository.save(category2);
                                 Product_lowprice lowprice = lowprice_build(returnMap);
                                 plRepository.save(lowprice);
                             }else{
@@ -163,11 +161,9 @@ public class CrawlingServiceImpl implements CrawlingService{
                                     String col = String.format("category%dName", j+1);
                                     categories += String.valueOf(returnMap.get(col)) + " ";
                                 }
+                                categories += String.valueOf(returnMap.get("characterValue"));
                                 Category category = category_build(String.valueOf(returnMap.get("productTitle")), categories);
                                 cRepository.save(category);
-                                log.info(">>>" + String.valueOf(returnMap.get("characterValue")));
-                                Category category2 = category_build(String.valueOf(returnMap.get("productTitle")), String.valueOf(returnMap.get("characterValue")));
-                                cRepository.save(category2);
                                 Product_lowprice lowprice = lowprice_build(returnMap);
                                 plRepository.save(lowprice);
 
