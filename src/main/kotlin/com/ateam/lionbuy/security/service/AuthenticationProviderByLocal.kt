@@ -15,13 +15,17 @@ class AuthenticationProviderByLocal
     val userDetailsServiceByLocal: UserDetailsServiceByLocal,
     val passwordEncoder: PasswordEncoder
 ) : AuthenticationProvider {
-    override fun authenticate(authentication: Authentication): Authentication =
-        with(userDetailsServiceByLocal.loadUserByUsername(authentication.name)) {
-            if(passwordEncoder.matches(authentication.credentials.toString(), this.password))
-                JWTAuthToken(this.username, this.password, mutableListOf(), true)
-            else
-                throw BadCredentialsException("password not matched")
-        }
+    override fun authenticate(authentication: Authentication): Authentication {
+        val principal = authentication.principal.toString()
+        val credentials = authentication.credentials.toString()
+
+        val queryResult = userDetailsServiceByLocal.loadUserByUsername(principal)
+
+        return  if( passwordEncoder.matches(credentials, queryResult.password) )
+                    JWTAuthToken(queryResult.username, principal, credentials, mutableListOf(), true)
+                else
+                    throw BadCredentialsException("password not matched")
+    }
 
     override fun supports(authentication: Class<*>?): Boolean =
         JWTAuthToken::class.java.isAssignableFrom(authentication)

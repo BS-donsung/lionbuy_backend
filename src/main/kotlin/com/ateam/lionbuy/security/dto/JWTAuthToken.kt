@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 
 class JWTAuthToken(
     val username : String,
+    val email : String,
     val password : String,
     val authorities : MutableList<String> = mutableListOf(),
     var hasAuthenticated : Boolean = false
@@ -20,7 +21,7 @@ class JWTAuthToken(
 
     override fun getDetails(): Any = Unit
 
-    override fun getPrincipal(): Any = this.username
+    override fun getPrincipal(): Any = this.email
 
     override fun isAuthenticated(): Boolean = this.hasAuthenticated
 

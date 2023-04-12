@@ -32,7 +32,11 @@ class SecurityConfig {
 
             this.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             this.addFilterBefore(jwtTokenFilter, JWTAuthenticationFilter::class.java)
-            this.authorizeHttpRequests().anyRequest().authenticated()
+
+
+            this.authorizeHttpRequests().anyRequest().permitAll()
+//            TestSetting
+//            this.authorizeHttpRequests().anyRequest().authenticated()
             this.build()
         }
 

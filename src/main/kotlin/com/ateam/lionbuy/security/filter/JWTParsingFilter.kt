@@ -25,7 +25,7 @@ class JWTParsingFilter(
             val parsingResultFromJWT = jwtUtil.parsingJWT(cookie.value)
             parsingResultFromJWT.ifPresent {
                 it["username"]?.let {
-                    SecurityContextHolder.getContext().authentication = JWTAuthToken(it, "", mutableListOf(), true)
+                    SecurityContextHolder.getContext().authentication = JWTAuthToken(it, "", "", mutableListOf(), true)
                 }
             }
         }
