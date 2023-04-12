@@ -1,7 +1,9 @@
 package com.ateam.lionbuy.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ateam.lionbuy.dto.LinkDTO;
 import com.ateam.lionbuy.dto.ProductDTO;
+import com.ateam.lionbuy.service.CategoryService;
 import com.ateam.lionbuy.service.CrawlingService;
 import com.ateam.lionbuy.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping(value = "/search")
 @RequiredArgsConstructor
+@Log4j2
 public class CrawlingController {
     
     @Autowired
     private final CrawlingService crawlingService;
+
+    @Autowired
+    private final CategoryService categoryService;
 
     @Autowired
     private final ProductService productService;
@@ -39,9 +47,12 @@ public class CrawlingController {
     }
 
     @GetMapping(value = "/tag")
-    public ResponseEntity<String> start_crawling(@RequestParam("item") String pd_name) {
-        String crawling_result = crawlingService.start_crawling(pd_name);
-        return ResponseEntity.ok().body(crawling_result);
+    public ResponseEntity<Map<String, Set<String>>> start_crawling(@RequestParam("item") String pd_name) {
+        crawlingService.start_crawling(pd_name);
+        Set<String> tags = categoryService.relation_categories(pd_name);
+        Map<String, Set<String>> tags_map = new HashMap<String, Set<String>>();
+        tags_map.put("categories", tags);
+        return ResponseEntity.ok().body(tags_map);
     }
 
     @GetMapping(value = "")
