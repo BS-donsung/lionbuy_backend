@@ -61,7 +61,7 @@ public interface CrawlingService {
         return lowprice;
     }
 
-    default Product_mall mall_build_entity(Map<String, Object> returnmap, String mall_name, String price) {
+    default Product_mall mall_build_entity(Map<String, Object> returnmap, String mall_name, Long price) {
         Product product = Product.builder()
             .pd_name(String.valueOf(returnmap.get("productTitle")))
             .build();

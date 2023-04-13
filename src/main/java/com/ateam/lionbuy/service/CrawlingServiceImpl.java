@@ -177,7 +177,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                 String lowMallStr = ObjectMapper.writeValueAsString(returnMap.get("lowMallList"));
                                 List<Map<String, Object>> lowMallList = ObjectMapper.readValue(lowMallStr, new TypeReference<List<Map<String, Object>>>(){});
                                 for(Map<String, Object> lowMallMap : lowMallList) {
-                                    Product_mall mall = mall_build_entity(returnMap, String.valueOf(lowMallMap.get("name")), String.valueOf(lowMallMap.get("price")));
+                                    Product_mall mall = mall_build_entity(returnMap, String.valueOf(lowMallMap.get("name")), Long.valueOf(String.valueOf(lowMallMap.get("price"))));
                                     pmRepository.save(mall);
                                 }
                             }

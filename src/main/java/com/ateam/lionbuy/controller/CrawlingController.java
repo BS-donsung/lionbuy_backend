@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ateam.lionbuy.dto.LinkDTO;
 import com.ateam.lionbuy.dto.ProductDTO;
+import com.ateam.lionbuy.dto.ProductMallDTO;
 import com.ateam.lionbuy.service.CategoryService;
 import com.ateam.lionbuy.service.CrawlingService;
 import com.ateam.lionbuy.service.ProductService;
@@ -47,11 +48,13 @@ public class CrawlingController {
     }
 
     @GetMapping(value = "/tag")
-    public ResponseEntity<Map<String, Set<String>>> start_crawling(@RequestParam("item") String pd_name) {
+    public ResponseEntity<Map<String, Object>> start_crawling(@RequestParam("item") String pd_name) {
         crawlingService.start_crawling(pd_name);
         Set<String> tags = categoryService.relation_categories(pd_name);
-        Map<String, Set<String>> tags_map = new HashMap<String, Set<String>>();
+        ProductMallDTO productMallDTO = productService.getLowProduct_mall(pd_name);
+        Map<String, Object> tags_map = new HashMap<String, Object>();
         tags_map.put("categories", tags);
+        tags_map.put("productLowMall", productMallDTO);
         return ResponseEntity.ok().body(tags_map);
     }
 
