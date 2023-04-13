@@ -33,7 +33,7 @@ public class Product_mall {
     private Product product;
 
     private String mall_name;
-    private String price;
+    private Long price;
     private LocalDateTime now_date;
 
     @PrePersist
