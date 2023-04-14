@@ -15,17 +15,14 @@ public interface BuyItemService {
 
   String addBuyList(BuyItemDTO buyItemdto);
 
-  default Buy_item buyItem_build_entity(BuyItemDTO buyItemDTO) {
-    User_info user_info = User_info.builder()
-        .user_num(buyItemDTO.getUser_num())
-        .build();
+  default Buy_item buyItem_build_entity(BuyItemDTO buyItemDTO, User_info user_info) {
     Product product = Product.builder()
         .pd_name(buyItemDTO.getPd_name())
         .build();
     Buy_item buy_item = Buy_item.builder()
         .user_info(user_info)
         .product(product)
-        .pay(buyItemDTO.getPay())
+        .pay(String.valueOf(buyItemDTO.getPrice()))
         .card_brand(buyItemDTO.getCard_brand())
         .card_style(buyItemDTO.getCard_style())
         .build();
