@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ProductLowpriceDTO {
     
-    private Long plno;
     private String pd_name;
     private Long pd_lowprice;
     private LocalDateTime now_date;

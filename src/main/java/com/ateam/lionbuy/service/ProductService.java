@@ -29,7 +29,6 @@ public interface ProductService {
 
     default ProductLowpriceDTO lowprice_build_dto(Product_lowprice product_lowprice) {
         ProductLowpriceDTO productLowpriceDTO = ProductLowpriceDTO.builder()
-            .plno(product_lowprice.getPlno())
             .pd_name(product_lowprice.getProduct().getPd_name())
             .pd_lowprice(Long.valueOf(product_lowprice.getPd_lowprice()))
             .now_date(product_lowprice.getNow_date())
@@ -39,11 +38,9 @@ public interface ProductService {
 
     default ProductMallDTO mall_build_dto(Product_mall product_mall) {
         ProductMallDTO productMallDTO = ProductMallDTO.builder()
-            .pmno(product_mall.getPmno())
             .pd_name(product_mall.getProduct().getPd_name())
             .mall_name(product_mall.getMall_name())
             .price(product_mall.getPrice())
-            .now_date(product_mall.getNow_date())
             .build();
         return productMallDTO;
     }
