@@ -19,10 +19,7 @@ public interface BuyItemService {
 
   List<BuyItemDTO> getAccountbook(Long month, Long year, String user_email);
 
-  default Buy_item buyItem_build_entity(BuyItemDTO buyItemDTO) {
-    User_info user_info = User_info.builder()
-        .user_num(buyItemDTO.getUser_num())
-        .build();
+  default Buy_item buyItem_build_entity(BuyItemDTO buyItemDTO, User_info user_info) {
     Product product = Product.builder()
         .pd_name(buyItemDTO.getPd_name())
         .build();
