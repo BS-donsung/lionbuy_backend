@@ -20,9 +20,13 @@ public class BuyItemServiceImpl implements BuyItemService {
   @Autowired
   private BuyItemRepository bRepository;
 
+  @Autowired
+  private UserRepository uRepository;
+
   @Override
   public String addBuyList(BuyItemDTO buyItemDTO) {
-    Buy_item buy_item = buyItem_build_entity(buyItemDTO);
+    User_info user_info = uRepository.getInfo(buyItemDTO.getUser_email()).get();
+    Buy_item buy_item = buyItem_build_entity(buyItemDTO, user_info);
     bRepository.save(buy_item);
     return "성공";
   }

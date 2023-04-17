@@ -26,7 +26,7 @@ public interface BuyItemService {
     Buy_item buy_item = Buy_item.builder()
         .user_info(user_info)
         .product(product)
-        .pay(buyItemDTO.getPay())
+        .pay(String.valueOf(buyItemDTO.getPay()))
         .card_brand(buyItemDTO.getCard_brand())
         .card_style(buyItemDTO.getCard_style())
         .build();
@@ -35,10 +35,8 @@ public interface BuyItemService {
 
   default BuyItemDTO buyItem_build_dto(Buy_item buy_item) {
     BuyItemDTO buyItemDTO = BuyItemDTO.builder()
-        .bno(buy_item.getBno())
-        .user_num(buy_item.getUser_info().getUser_num())
         .pd_name(buy_item.getProduct().getPd_name())
-        .pay(String.valueOf(Long.valueOf(buy_item.getPay())))
+        .pay(Long.valueOf(buy_item.getPay()))
         .buy_date(buy_item.getBuy_date())
         .card_brand(buy_item.getCard_brand())
         .card_style(buy_item.getCard_style())

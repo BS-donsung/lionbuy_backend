@@ -12,11 +12,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BuyItemDTO {
-
-  private Long bno;
-  private Long user_num;
+  private String user_email;
   private String pd_name;
-  private String pay;
+  private Long pay;
   private LocalDateTime buy_date;
   private String card_brand;
   private String card_style;
