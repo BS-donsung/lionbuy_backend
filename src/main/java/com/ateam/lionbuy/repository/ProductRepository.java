@@ -16,4 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, String>{
 
     @Query("select p from Product p where p.pd_name like concat('%', :pd_name, '%') ")
     List<Product> getRelatedList(@Param("pd_name") String pd_name);
+
+    @Query("delete from Product p where p.pd_name=:pd_name")
+    void deleteProduct(@Param("pd_name") String pd_name);
 }

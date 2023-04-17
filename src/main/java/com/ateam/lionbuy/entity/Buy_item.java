@@ -36,7 +36,7 @@ public class Buy_item {
     @JoinColumn(name="pd_name", referencedColumnName = "pd_name")
     private Product product;
 
-    private String pay;
+    private Long price;
     private LocalDateTime buy_date;
     private String card_brand;
     private String card_style;
