@@ -68,8 +68,6 @@ public class Mall {
             return "G마켓";
         }else if(link.contains("shopping.interpark.com")) {
             return "인터파크";
-        }else if(link.contains("coupang.com")) {
-            return "쿠팡";
         }else if(link.contains("emart.ssg.com")) {
             return "e마트";
         }else if(link.contains("shinsegaemall.ssg.com")) {
