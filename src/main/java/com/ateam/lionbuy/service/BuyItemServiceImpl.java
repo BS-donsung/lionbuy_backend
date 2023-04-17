@@ -1,6 +1,7 @@
 package com.ateam.lionbuy.service;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import com.ateam.lionbuy.entity.Buy_item;
 import com.ateam.lionbuy.entity.User_info;
 import com.ateam.lionbuy.repository.BuyItemRepository;
 import com.ateam.lionbuy.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class BuyItemServiceImpl implements BuyItemService {
@@ -39,6 +42,12 @@ public class BuyItemServiceImpl implements BuyItemService {
       buyitem_dto.add(buyItemDTO);
     }
     return buyitem_dto;
+  }
+
+  @Override
+  @Transactional
+  public void deleteBuyItem(String pd_name, LocalDateTime buy_date) {
+    bRepository.delete_buy(pd_name, buy_date);
   }
 }
 

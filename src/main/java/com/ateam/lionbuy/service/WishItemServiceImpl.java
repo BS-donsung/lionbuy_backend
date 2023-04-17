@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import com.ateam.lionbuy.entity.Product;
 import com.ateam.lionbuy.entity.Wish_item;
 import com.ateam.lionbuy.repository.UserRepository;
 import com.ateam.lionbuy.repository.WishItemRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class WishItemServiceImpl implements WishItemService {
@@ -37,5 +40,11 @@ public class WishItemServiceImpl implements WishItemService {
       userProductDtoData.add(product_build_dto(userProductEntityData.get(i)));
     }
     return userProductDtoData;
+  }
+
+  @Override
+  @Transactional
+  public void deleteBuyItem(String pd_name, LocalDateTime choice_date) {
+    wRepository.delete_wish(pd_name, choice_date);
   }
 }

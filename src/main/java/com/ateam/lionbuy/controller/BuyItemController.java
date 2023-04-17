@@ -1,9 +1,12 @@
 package com.ateam.lionbuy.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,5 +40,12 @@ public class BuyItemController {
     List<BuyItemDTO> buyItemDTOS = bService.getAccountbook(month, year, user_email);
     return ResponseEntity.ok().body(buyItemDTOS);
   }
+
+  @DeleteMapping(value = "/accountbook")
+  public ResponseEntity<String> delete_buyItem(@RequestParam("product") String pd_name, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS") LocalDateTime buy_date ) {
+    bService.deleteBuyItem(pd_name, buy_date);
+    return ResponseEntity.ok().body("성공");
+  }
+
 
 }

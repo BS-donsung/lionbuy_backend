@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ateam.lionbuy.dto.BuyItemDTO;
@@ -12,6 +13,8 @@ public interface BuyItemService {
   String addBuyList(BuyItemDTO buyItemdto);
 
   List<BuyItemDTO> getAccountbook(Long month, Long year, String user_email);
+
+  void deleteBuyItem(String pd_name, LocalDateTime buy_date);
 
   default Buy_item buyItem_build_entity(BuyItemDTO buyItemDTO, User_info user_info) {
     Product product = Product.builder()

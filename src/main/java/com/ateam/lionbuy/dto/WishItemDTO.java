@@ -15,9 +15,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class WishItemDTO {
 
-  private Long wno;
   private Long user_num;
   private String pd_name;
+  private String image_url;
+  private String pd_lowprice;
   private Long priority;
   private LocalDateTime choice_date;
+
 }

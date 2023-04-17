@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ateam.lionbuy.dto.ProductDTO;
@@ -13,6 +14,8 @@ public interface WishItemService {
   String addWishList(WishItemDTO wishItemdto);
 
   List<ProductDTO> userProductList(String user_email);
+
+  void deleteBuyItem(String pd_name, LocalDateTime buy_date);
 
   default Wish_item wishItem_build_entity(WishItemDTO wishItemDTO) {
     User_info user_info = User_info.builder()
