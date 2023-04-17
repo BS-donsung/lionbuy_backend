@@ -8,7 +8,11 @@ import com.ateam.lionbuy.entity.User_info;
 import com.ateam.lionbuy.repository.BuyItemRepository;
 import com.ateam.lionbuy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class BuyItemServiceImpl implements BuyItemService {
@@ -21,6 +25,17 @@ public class BuyItemServiceImpl implements BuyItemService {
     Buy_item buy_item = buyItem_build_entity(buyItemDTO);
     bRepository.save(buy_item);
     return "성공";
+  }
+
+  @Override
+  public List<BuyItemDTO> getAccountbook(Long month, Long year, String user_email) {
+    List<Buy_item> buy_itemList = bRepository.get_buyitems(month, year, user_email);
+    List<BuyItemDTO> buyitem_dto = new ArrayList<>();
+    for (Buy_item buyitem : buy_itemList) {
+      BuyItemDTO buyItemDTO = buyItem_build_dto(buyitem);
+      buyitem_dto.add(buyItemDTO);
+    }
+    return buyitem_dto;
   }
 }
 

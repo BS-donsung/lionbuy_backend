@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ateam.lionbuy.dto.BuyItemDTO;
+import com.ateam.lionbuy.entity.Buy_item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,18 +66,31 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Map<String, Object> getUserProduct(String pd_name) {
         Map<String, Object> getUserProductInfo = new HashMap<String, Object>();
+
         Product product = pRepository.getProduct(pd_name).get();
         ProductDTO productDTO = product_build_dto(product);
         getUserProductInfo.put("product", productDTO);
+
         List<Product_lowprice> productLowEntityList = pLowpriceRepository.getProductLowprice(product.getPd_name()).get();
         List<ProductLowpriceDTO> productLowDtoList = new ArrayList<ProductLowpriceDTO>();
         for (int i = 0; i < productLowEntityList.size(); i++) {
             productLowDtoList.add(lowprice_build_dto(productLowEntityList.get(i)));
         }
         getUserProductInfo.put("lowprice", productLowDtoList);
+
         Product_mall product_mall = pMallRepository.getLowMall(pd_name).get();
         ProductMallDTO productMallDTO = mall_build_dto(product_mall);
         getUserProductInfo.put("lowmall", productMallDTO);
+
+        List<Product> relatedList = pRepository.getRelatedList(pd_name);
+        List<ProductDTO> related_DTO = new ArrayList<>();
+        if (relatedList.size()>0) {
+            for (Product relatedProduct : relatedList) {
+                ProductDTO relatedproductDTO = product_build_dto(relatedProduct);
+                related_DTO.add(relatedproductDTO);
+            }
+            getUserProductInfo.put("related", related_DTO);
+        }
         return getUserProductInfo;
     }
 
@@ -85,5 +100,5 @@ public class ProductServiceImpl implements ProductService{
         ProductMallDTO productMallDTO = mall_build_dto(product_mall);
         return productMallDTO;
     }
-    
+
 }
