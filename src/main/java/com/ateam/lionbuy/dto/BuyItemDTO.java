@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class BuyItemDTO {
   private String user_email;
   private String pd_name;
-  private Long pay;
+  private Long price;
   private LocalDateTime buy_date;
   private String card_brand;
   private String card_style;
