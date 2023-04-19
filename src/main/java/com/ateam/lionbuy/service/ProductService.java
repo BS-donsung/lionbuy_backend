@@ -14,7 +14,7 @@ public interface ProductService {
     
     List<ProductDTO> findByTags(String[] tags);
 
-    Map<String, Object> getUserProduct(String pd_name);
+    Map<String, Object> getProduct(String pd_name);
 
     ProductMallDTO getLowProduct_mall(String pd_name);
 

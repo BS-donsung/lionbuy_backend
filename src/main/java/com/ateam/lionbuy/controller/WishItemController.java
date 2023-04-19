@@ -47,7 +47,7 @@ public class WishItemController {
 
   @GetMapping(value = "/detail")
   public ResponseEntity<Map<String, Object>> wishDetail(@RequestParam("pd_name") String pd_name) {
-    Map<String, Object> wishProductDetail = pService.getUserProduct(pd_name);
+    Map<String, Object> wishProductDetail = pService.getProduct(pd_name);
     return ResponseEntity.ok().body(wishProductDetail);
   }
 

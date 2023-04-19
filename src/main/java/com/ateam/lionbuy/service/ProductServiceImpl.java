@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,13 @@ import com.ateam.lionbuy.repository.ProductRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService{
 
     @PersistenceContext
@@ -36,6 +40,8 @@ public class ProductServiceImpl implements ProductService{
     private ProductMallRepository pMallRepository;
     @Autowired
     private ProductLowpriceRepository pLowpriceRepository;
+    @Autowired
+    private final CategoryService categoryService;
     @Override
     public List<ProductDTO> findByTags(String[] tags) {
         List<ProductDTO> product_dto_list = new ArrayList<ProductDTO>();
@@ -62,11 +68,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Map<String, Object> getUserProduct(String pd_name) {
+    public Map<String, Object> getProduct(String pd_name) {
         Map<String, Object> getUserProductInfo = new HashMap<String, Object>();
         Product product = pRepository.getProduct(pd_name).get();
         ProductDTO productDTO = product_build_dto(product);
         getUserProductInfo.put("product", productDTO);
+        Set<String> tags = categoryService.relation_categories(pd_name);
+        getUserProductInfo.put("tags", tags);
         List<Product_lowprice> productLowEntityList = pLowpriceRepository.getProductLowprice(product.getPd_name()).get();
         List<ProductLowpriceDTO> productLowDtoList = new ArrayList<ProductLowpriceDTO>();
         for (int i = 0; i < productLowEntityList.size(); i++) {

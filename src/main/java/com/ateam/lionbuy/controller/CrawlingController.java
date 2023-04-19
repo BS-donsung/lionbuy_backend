@@ -25,14 +25,10 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequestMapping(value = "/search")
 @RequiredArgsConstructor
-@Log4j2
 public class CrawlingController {
     
     @Autowired
     private final CrawlingService crawlingService;
-
-    @Autowired
-    private final CategoryService categoryService;
 
     @Autowired
     private final ProductService productService;
@@ -50,12 +46,8 @@ public class CrawlingController {
     @GetMapping(value = "/tag")
     public ResponseEntity<Map<String, Object>> start_crawling(@RequestParam("item") String pd_name) {
         crawlingService.start_crawling(pd_name);
-        Set<String> tags = categoryService.relation_categories(pd_name);
-        ProductMallDTO productMallDTO = productService.getLowProduct_mall(pd_name);
-        Map<String, Object> tags_map = new HashMap<String, Object>();
-        tags_map.put("categories", tags);
-        tags_map.put("productLowMall", productMallDTO);
-        return ResponseEntity.ok().body(tags_map);
+        Map<String, Object> productDetail = productService.getProduct(pd_name);
+        return ResponseEntity.ok().body(productDetail);
     }
 
     @GetMapping(value = "")
