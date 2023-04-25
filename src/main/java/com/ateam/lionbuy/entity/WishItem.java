@@ -2,14 +2,7 @@ package com.ateam.lionbuy.entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,27 +15,26 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class Buy_item {
+public class Wish_item {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bno;
+    private Long wno;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_num", referencedColumnName = "user_num")
-    private User_info user_info;
+    private UserInfo user_info;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="pd_name", referencedColumnName = "pd_name")
     private Product product;
 
-    private Long price;
-    private LocalDateTime buy_date;
-    private String card_brand;
-    private String card_style;
+    private Long priority;
+    private LocalDateTime choice_date;
 
     @PrePersist
     public void PrePersist() {
-        buy_date = LocalDateTime.now();
+        choice_date = LocalDateTime.now();
     }
+
 }
