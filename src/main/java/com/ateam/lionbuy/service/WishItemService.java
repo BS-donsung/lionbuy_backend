@@ -1,43 +1,44 @@
 package com.ateam.lionbuy.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ateam.lionbuy.dto.ProductDTO;
 import com.ateam.lionbuy.dto.WishItemDTO;
 import com.ateam.lionbuy.entity.Product;
-import com.ateam.lionbuy.entity.User_info;
-import com.ateam.lionbuy.entity.Wish_item;
+import com.ateam.lionbuy.entity.UserInfo;
+import com.ateam.lionbuy.entity.WishItem;
 
 public interface WishItemService {
 
   String addWishList(WishItemDTO wishItemdto);
 
-  List<ProductDTO> userProductList(String user_email);
+  List<ProductDTO> userProductList(String userEmail);
 
-  void deleteBuyItem(String pd_name, LocalDateTime buy_date);
+  void deleteBuyItem(String pdName, LocalDate buyDate);
 
-  default Wish_item wishItem_build_entity(WishItemDTO wishItemDTO) {
-    User_info user_info = User_info.builder()
-        .user_num(wishItemDTO.getUser_num())
+  default WishItem wishItem_build_entity(WishItemDTO wishItemDTO) {
+    UserInfo userInfo = UserInfo.builder()
+        .userNum(wishItemDTO.getUserNum())
         .build();
     Product product = Product.builder()
-        .pd_name(wishItemDTO.getPd_name())
+        .pdName(wishItemDTO.getPdName())
         .build();
-    Wish_item wish_item = Wish_item.builder()
-        .user_info(user_info)
+    WishItem wishItem = WishItem.builder()
+        .userInfo(userInfo)
         .product(product)
         .priority(wishItemDTO.getPriority())
-        .choice_date(wishItemDTO.getChoice_date())
+        .choiceDate(wishItemDTO.getChoiceDate())
         .build();
-    return wish_item;
+    return wishItem;
   }
 
   default ProductDTO product_build_dto(Product product) {
     ProductDTO productDTO = ProductDTO.builder()
-      .pd_name(product.getPd_name())
-      .image_url(product.getImage_url())
-      .pd_lowprice(product.getPd_lowprice())
+      .pdName(product.getPdName())
+      .imageUrl(product.getImageUrl())
+      .pdLowprice(product.getPdLowprice())
       .build();
     return productDTO;
   }

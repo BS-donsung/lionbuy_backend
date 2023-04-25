@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -8,14 +9,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ateam.lionbuy.entity.Buy_item;
+import com.ateam.lionbuy.entity.BuyItem;
 
-public interface BuyItemRepository extends JpaRepository<Buy_item, Long> {
+public interface BuyItemRepository extends JpaRepository<BuyItem, Long> {
 
-    @Query("select b from Buy_item b where month(b.buy_date)=:month and year(b.buy_date)=:year and b.user_info.user_email=:user_email ")
-    List<Buy_item> get_buyitems(@Param("month") Long month, @Param("year") Long year, @Param("user_email") String user_email);
+    @Query("select b from BuyItem b where month(b.buyDate)=:month and year(b.buyDate)=:year and b.userInfo.userEmail=:userEmail ")
+    List<BuyItem> get_buyitems(@Param("month") Long month, @Param("year") Long year, @Param("userEmail") String userEmail);
 
     @Modifying
-    @Query("delete from Buy_item b where b.product.pd_name=:pd_name and b.buy_date=:buy_date")
-    int delete_buy(@Param("pd_name") String pd_name, @Param("buy_date") LocalDateTime buy_date);
+    @Query("delete from BuyItem b where b.product.pdName=:pdName and b.buyDate=:buyDate")
+    int delete_buy(@Param("pdName") String pdName, @Param("buyDate") LocalDate buyDate);
 }

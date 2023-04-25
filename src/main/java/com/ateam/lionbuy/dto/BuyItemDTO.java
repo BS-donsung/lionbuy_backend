@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,10 +14,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BuyItemDTO {
 
-  private String user_email;
-  private String pd_name;
+  private String userEmail;
+  private String pdName;
   private Long price;
-  private LocalDateTime buy_date;
-  private String card_brand;
-  private String card_style;
+  private LocalDate buyDate;
+  private String cardBrand;
+  private String cardStyle;
 }

@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -10,14 +11,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ateam.lionbuy.entity.Product;
-import com.ateam.lionbuy.entity.Wish_item;
+import com.ateam.lionbuy.entity.WishItem;
 
-public interface WishItemRepository extends JpaRepository<Wish_item, Long> {
+public interface WishItemRepository extends JpaRepository<WishItem, Long> {
 
-    @Query("select w.product from Wish_item w join w.user_info u where u.user_email=:user_email")
-    Optional<List<Product>> wish_product(@Param("user_email") String user_email);
+    @Query("select w.product from WishItem w join w.userInfo u where u.userEmail=:userEmail")
+    Optional<List<Product>> wish_product(@Param("userEmail") String userEmail);
 
     @Modifying
-    @Query("delete from Wish_item w where w.product.pd_name=:pd_name and w.choice_date=:choice_date")
-    int delete_wish(@Param("pd_name") String pd_name, @Param("choice_date") LocalDateTime choice_date);
+    @Query("delete from WishItem w where w.product.pdName=:pdName and w.choiceDate=:choiceDate")
+    int delete_wish(@Param("pdName") String pdName, @Param("choiceDate") LocalDate choiceDate);
 }

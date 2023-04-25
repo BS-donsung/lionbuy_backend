@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.ateam.lionbuy.entity.Category;
 import com.ateam.lionbuy.entity.Product;
-import com.ateam.lionbuy.entity.Product_lowprice;
-import com.ateam.lionbuy.entity.Product_mall;
+import com.ateam.lionbuy.entity.ProductLowprice;
+import com.ateam.lionbuy.entity.ProductMall;
 import com.ateam.lionbuy.util.FileMake;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,6 +17,7 @@ public interface CrawlingService {
     String[] getKeyword(String url);
 
     String start_crawling(String keyword);
+
 
     default String[] data_preprocessing(String response) {
         String split_response = (response.split("application/json")[1]).split(">")[1].split("</scrip")[0];
@@ -32,17 +33,14 @@ public interface CrawlingService {
 
     default Product product_build(Map<String, Object> returnMap) {
         Product product = Product.builder()
-            .pd_name(String.valueOf(returnMap.get("productTitle")))
-            .image_url(String.valueOf(returnMap.get("imageUrl")))
-            .pd_lowprice(String.valueOf(returnMap.get("lowPrice")))
+            .pdName(String.valueOf(returnMap.get("productTitle")))
+            .imageUrl(String.valueOf(returnMap.get("imageUrl")))
+            .pdLowprice(String.valueOf(returnMap.get("lowPrice")))
             .build();
         return product;
     }
 
-    default Category category_build(String producttitle, String categories) {
-        Product product = Product.builder()
-            .pd_name(producttitle)
-            .build();
+    default Category category_build(Product product, String categories) {
         Category category = Category.builder()
             .product(product)
             .categories(categories)
@@ -50,24 +48,18 @@ public interface CrawlingService {
         return category;
     }
 
-    default Product_lowprice lowprice_build(Map<String, Object> returnmap) {
-        Product product = Product.builder()
-            .pd_name(String.valueOf(returnmap.get("productTitle")))
-            .build();
-        Product_lowprice lowprice = Product_lowprice.builder()
+    default ProductLowprice lowprice_build(Product product, Map<String, Object> returnmap) {
+        ProductLowprice lowprice = ProductLowprice.builder()
             .product(product)
-            .pd_lowprice(String.valueOf(returnmap.get("lowPrice")))
+            .pdLowprice(String.valueOf(returnmap.get("lowPrice")))
             .build();
         return lowprice;
     }
 
-    default Product_mall mall_build_entity(Map<String, Object> returnmap, String mall_name, Long price) {
-        Product product = Product.builder()
-            .pd_name(String.valueOf(returnmap.get("productTitle")))
-            .build();
-        Product_mall mall = Product_mall.builder()
+    default ProductMall mall_build_entity(Product product, Map<String, Object> returnmap, String mallName, Long price) {
+        ProductMall mall = ProductMall.builder()
             .product(product)
-            .mall_name(mall_name)
+            .mallName(mallName)
             .price(price)
             .build();
         return mall;

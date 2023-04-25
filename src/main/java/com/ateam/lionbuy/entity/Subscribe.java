@@ -26,8 +26,8 @@ public class Subscribe {
     private Long sno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_num", referencedColumnName = "user_num")
-    private User_info user_info;
+    @JoinColumn(name="userNum", referencedColumnName = "userNum")
+    private UserInfo userInfo;
 
-    private String user_email;
+    private String userEmail;
 }

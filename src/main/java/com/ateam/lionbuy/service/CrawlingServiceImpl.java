@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.ateam.lionbuy.entity.Category;
 import com.ateam.lionbuy.entity.Product;
-import com.ateam.lionbuy.entity.Product_lowprice;
-import com.ateam.lionbuy.entity.Product_mall;
+import com.ateam.lionbuy.entity.ProductLowprice;
+import com.ateam.lionbuy.entity.ProductMall;
 import com.ateam.lionbuy.repository.CategoryRepository;
 import com.ateam.lionbuy.repository.ProductLowpriceRepository;
 import com.ateam.lionbuy.repository.ProductMallRepository;
@@ -114,13 +114,14 @@ public class CrawlingServiceImpl implements CrawlingService{
                             // Map타입의 데이터를 Entity로 변환하여 디비에 저장하는 코드
                             // product_build 메서드는 CrawlingService 클래스에 있음
                             Product product = product_build(returnMap);
-                            Product product2 = pRepository.getProduct(product.getPd_name()).get();
-                            if(product.getPd_name() == product2.getPd_name()){
-                                pRepository.deleteProduct(product2.getPd_name());
-                                pRepository.save(product);
-                            }else {
-                                pRepository.save(product);
-                            }
+//                            Product product2 = pRepository.getProduct(product.getPdName()).get();
+//                            if(product2 != null && product.getPdName().equals(product2.getPdName())){
+//                                pRepository.deleteProduct(product2.getPdName());
+//                                pRepository.save(product);
+//                            }else {
+//                                pRepository.save(product);
+//                            }
+                            pRepository.save(product);
 
                             // 데이터에 카테고리가 여러개의 key에 존재하고 있어서 한 String 변수에 뭉쳐서 디비에 넣은 코드
                             // 데이터에서 category1Name 이런식으로 key가 정의되어 있음
@@ -132,13 +133,14 @@ public class CrawlingServiceImpl implements CrawlingService{
                             categories += String.valueOf(returnMap.get("characterValue"));
                             // DB에 넣을 데이터를 Entity에 넣어 디비에 저장
                             // category_build 메서드는 CrawlingService 클래스에 있음
-                            Category category = category_build(String.valueOf(returnMap.get("productTitle")), categories);
+                            Product product1 = pRepository.getPno(product.getPdName()).get();
+                            Category category = category_build(product1, categories);
                             cRepository.save(category);
 
                             // 최저가 테이블에 최저가 데이터를 넣는 코드
                             // DB에 넣을 데이터를 Entity에 넣어 디비에 저장
                             // lowprice_build 메서드는 CrawlingService 클래스에 있음
-                            Product_lowprice lowprice = lowprice_build(returnMap);
+                            ProductLowprice lowprice = lowprice_build(product1, returnMap);
                             plRepository.save(lowprice);
                         }else {
                             Map<String, Object> returnMap = StringToMap(data_Arr[i]);
@@ -146,43 +148,47 @@ public class CrawlingServiceImpl implements CrawlingService{
                             if(returnMap.get("lowMallList") == null) {
                                 // 위에 코드와 같다
                                 Product product = product_build(returnMap);
-                                Product product2 = pRepository.getProduct(product.getPd_name()).get();
-                                if(product.getPd_name() == product2.getPd_name()){
-                                    pRepository.deleteProduct(product2.getPd_name());
-                                    pRepository.save(product);
-                                }else {
-                                    pRepository.save(product);
-                                }
+//                                Product product2 = pRepository.getProduct(product.getPdName()).get();
+//                                if(product2 != null && product.getPdName().equals(product2.getPdName())){
+//                                    pRepository.deleteProduct(product2.getPdName());
+//                                    pRepository.save(product);
+//                                }else {
+//                                    pRepository.save(product);
+//                                }
+                                pRepository.save(product);
                                 String categories = "";
                                 for (int j = 0; j < 4; j++) {
                                     String col = String.format("category%dName", j+1);
                                     categories += String.valueOf(returnMap.get(col)) + "|";
                                 }
                                 categories += String.valueOf(returnMap.get("characterValue"));
-                                Category category = category_build(String.valueOf(returnMap.get("productTitle")), categories);
+                                Product product1 = pRepository.getPno(product.getPdName()).get();
+                                Category category = category_build(product1, categories);
                                 cRepository.save(category);
-                                Product_lowprice lowprice = lowprice_build(returnMap);
+                                ProductLowprice lowprice = lowprice_build(product1, returnMap);
                                 plRepository.save(lowprice);
                             }else{
                                 // 위에 코드와 같으나 차이점이 있다면 요기에 들어오는 데이터들은 쇼핑몰 데이터가 있어서
                                 // product_mall 테이블에 쇼핑몰 데이터를 저장
                                 Product product = product_build(returnMap);
-                                Product product2 = pRepository.getProduct(product.getPd_name()).get();
-                                if(product.getPd_name() == product2.getPd_name()){
-                                    pRepository.deleteProduct(product2.getPd_name());
-                                    pRepository.save(product);
-                                }else {
-                                    pRepository.save(product);
-                                }
+//                                Product product2 = pRepository.getProduct(product.getPdName()).get();
+//                                if(product2 != null && product.getPdName().equals(product2.getPdName())){
+//                                    pRepository.deleteProduct(product2.getPdName());
+//                                    pRepository.save(product);
+//                                }else {
+//                                    pRepository.save(product);
+//                                }
+                                pRepository.save(product);
                                 String categories = "";
                                 for (int j = 0; j < 4; j++) {
                                     String col = String.format("category%dName", j+1);
                                     categories += String.valueOf(returnMap.get(col)) + "|";
                                 }
                                 categories += String.valueOf(returnMap.get("characterValue"));
-                                Category category = category_build(String.valueOf(returnMap.get("productTitle")), categories);
+                                Product product1 = pRepository.getPno(product.getPdName()).get();
+                                Category category = category_build(product1, categories);
                                 cRepository.save(category);
-                                Product_lowprice lowprice = lowprice_build(returnMap);
+                                ProductLowprice lowprice = lowprice_build(product1, returnMap);
                                 plRepository.save(lowprice);
 
                                 // 요부분이 쇼핑몰 데이터를 저장하는 부분
@@ -195,7 +201,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                 String lowMallStr = ObjectMapper.writeValueAsString(returnMap.get("lowMallList"));
                                 List<Map<String, Object>> lowMallList = ObjectMapper.readValue(lowMallStr, new TypeReference<List<Map<String, Object>>>(){});
                                 for(Map<String, Object> lowMallMap : lowMallList) {
-                                    Product_mall mall = mall_build_entity(returnMap, String.valueOf(lowMallMap.get("name")), Long.valueOf(String.valueOf(lowMallMap.get("price"))));
+                                    ProductMall mall = mall_build_entity(product1, returnMap, String.valueOf(lowMallMap.get("name")), Long.valueOf(String.valueOf(lowMallMap.get("price"))));
                                     pmRepository.save(mall);
                                 }
                             }

@@ -7,8 +7,8 @@ import com.ateam.lionbuy.dto.ProductDTO;
 import com.ateam.lionbuy.dto.ProductLowpriceDTO;
 import com.ateam.lionbuy.dto.ProductMallDTO;
 import com.ateam.lionbuy.entity.Product;
-import com.ateam.lionbuy.entity.Product_lowprice;
-import com.ateam.lionbuy.entity.Product_mall;
+import com.ateam.lionbuy.entity.ProductLowprice;
+import com.ateam.lionbuy.entity.ProductMall;
 
 public interface ProductService {
     
@@ -20,27 +20,28 @@ public interface ProductService {
 
     default ProductDTO product_build_dto(Product product){
         ProductDTO productDTO = ProductDTO.builder()
-            .pd_name(product.getPd_name())
-            .image_url(product.getImage_url())
-            .pd_lowprice(product.getPd_lowprice())
+            .pno(product.getPno())
+            .pdName(product.getPdName())
+            .imageUrl(product.getImageUrl())
+            .pdLowprice(product.getPdLowprice())
             .build();
         return productDTO;
     }
 
-    default ProductLowpriceDTO lowprice_build_dto(Product_lowprice product_lowprice) {
+    default ProductLowpriceDTO lowprice_build_dto(ProductLowprice productLowprice) {
         ProductLowpriceDTO productLowpriceDTO = ProductLowpriceDTO.builder()
-            .pd_name(product_lowprice.getProduct().getPd_name())
-            .pd_lowprice(Long.valueOf(product_lowprice.getPd_lowprice()))
-            .now_date(product_lowprice.getNow_date())
+            .pdName(productLowprice.getProduct().getPdName())
+            .pdLowprice(Long.valueOf(productLowprice.getPdLowprice()))
+            .nowDate(productLowprice.getNowDate())
             .build();
         return productLowpriceDTO;
     }
 
-    default ProductMallDTO mall_build_dto(Product_mall product_mall) {
+    default ProductMallDTO mall_build_dto(ProductMall productMall) {
         ProductMallDTO productMallDTO = ProductMallDTO.builder()
-            .pd_name(product_mall.getProduct().getPd_name())
-            .mall_name(product_mall.getMall_name())
-            .price(product_mall.getPrice())
+            .pdName(productMall.getProduct().getPdName())
+            .mallName(productMall.getMallName())
+            .price(productMall.getPrice())
             .build();
         return productMallDTO;
     }

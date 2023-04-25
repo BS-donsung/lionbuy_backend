@@ -37,16 +37,16 @@ public class CrawlingController {
     public ResponseEntity<LinkDTO> url_parsing(@RequestParam("url") String url) {
         String[] pd_list = crawlingService.getKeyword(url);
         LinkDTO linkDTO = LinkDTO.builder()
-            .pd_name(pd_list[0])
+            .pdName(pd_list[0])
             .price(pd_list[1])
             .build();
         return ResponseEntity.ok().body(linkDTO);
     }
 
     @GetMapping(value = "/tag")
-    public ResponseEntity<Map<String, Object>> start_crawling(@RequestParam("item") String pd_name) {
-        crawlingService.start_crawling(pd_name);
-        Map<String, Object> productDetail = productService.getProduct(pd_name);
+    public ResponseEntity<Map<String, Object>> start_crawling(@RequestParam("item") String pdName) {
+        crawlingService.start_crawling(pdName);
+        Map<String, Object> productDetail = productService.getProduct(pdName);
         return ResponseEntity.ok().body(productDetail);
     }
 

@@ -31,7 +31,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<String> user_login(@RequestBody UserDTO userdto) {
-        String result = uService.login(userdto.getUser_email());
+        String result = uService.login(userdto.getUserEmail());
         return ResponseEntity.ok().body(result);
     }
 

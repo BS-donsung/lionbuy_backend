@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -15,8 +16,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ProductMallDTO {
     
-    private String pd_name;
-    private String mall_name;
+    private String pdName;
+    private String mallName;
     private Long price;
-    private LocalDateTime now_date;
+    private LocalDate nowDate;
 }

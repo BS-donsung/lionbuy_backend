@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ateam.lionbuy.entity.Product_lowprice;
+import com.ateam.lionbuy.entity.ProductLowprice;
 
-public interface ProductLowpriceRepository extends JpaRepository<Product_lowprice, Long>{
+public interface ProductLowpriceRepository extends JpaRepository<ProductLowprice, Long>{
     
-    @Query("select pl from Product_lowprice pl where pl.product.pd_name=:pd_name")
-    Optional<List<Product_lowprice>> getProductLowprice(@Param("pd_name") String pd_name);
+    @Query("select pl from ProductLowprice pl where pl.product.pdName=:pdName")
+    Optional<List<ProductLowprice>> getProductLowprice(@Param("pdName") String pdName);
 }
