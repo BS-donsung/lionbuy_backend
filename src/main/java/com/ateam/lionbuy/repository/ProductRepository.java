@@ -9,14 +9,17 @@ import org.springframework.data.repository.query.Param;
 
 import com.ateam.lionbuy.entity.Product;
 
-public interface ProductRepository extends JpaRepository<Product, String>{
+public interface ProductRepository extends JpaRepository<Product, Long>{
 
-    @Query("select p from Product p where p.pd_name=:pd_name")
-    Optional<Product> getProduct(@Param("pd_name") String pd_name);
+    @Query("select p from Product p where p.pdName=:pdName")
+    Optional<Product> getProduct(@Param("pdName") String pdName);
 
-    @Query("select p from Product p where p.pd_name like concat('%', :pd_name, '%') ")
-    List<Product> getRelatedList(@Param("pd_name") String pd_name);
+    @Query("select p from Product p where p.pdName like concat('%', :pdName, '%') ")
+    List<Product> getRelatedList(@Param("pdName") String pdName);
 
-    @Query("delete from Product p where p.pd_name=:pd_name")
-    void deleteProduct(@Param("pd_name") String pd_name);
+    @Query("delete from Product p where p.pdName=:pdName")
+    void deleteProduct(@Param("pdName") String pdName);
+
+    @Query("select p from Product p where p.pdName=:pdName")
+    Optional<Product> getPno(@Param("pdName") String pdName);
 }

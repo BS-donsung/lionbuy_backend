@@ -13,8 +13,8 @@ import com.ateam.lionbuy.dto.ProductDTO;
 import com.ateam.lionbuy.dto.ProductLowpriceDTO;
 import com.ateam.lionbuy.dto.ProductMallDTO;
 import com.ateam.lionbuy.entity.Product;
-import com.ateam.lionbuy.entity.Product_lowprice;
-import com.ateam.lionbuy.entity.Product_mall;
+import com.ateam.lionbuy.entity.ProductLowprice;
+import com.ateam.lionbuy.entity.ProductMall;
 import com.ateam.lionbuy.repository.ProductLowpriceRepository;
 import com.ateam.lionbuy.repository.ProductMallRepository;
 import com.ateam.lionbuy.repository.ProductRepository;
@@ -22,7 +22,6 @@ import com.ateam.lionbuy.repository.ProductRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -68,24 +67,24 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Map<String, Object> getProduct(String pd_name) {
+    public Map<String, Object> getProduct(String pdName) {
         Map<String, Object> getUserProductInfo = new HashMap<String, Object>();
-        Product product = pRepository.getProduct(pd_name).get();
+        Product product = pRepository.getProduct(pdName).get();
         ProductDTO productDTO = product_build_dto(product);
         getUserProductInfo.put("product", productDTO);
-        Set<String> tags = categoryService.relation_categories(pd_name);
+        Set<String> tags = categoryService.relation_categories(pdName);
         getUserProductInfo.put("tags", tags);
-        List<Product_lowprice> productLowEntityList = pLowpriceRepository.getProductLowprice(product.getPd_name()).get();
+        List<ProductLowprice> productLowEntityList = pLowpriceRepository.getProductLowprice(product.getPdName()).get();
         List<ProductLowpriceDTO> productLowDtoList = new ArrayList<ProductLowpriceDTO>();
         for (int i = 0; i < productLowEntityList.size(); i++) {
             productLowDtoList.add(lowprice_build_dto(productLowEntityList.get(i)));
         }
         getUserProductInfo.put("lowprice", productLowDtoList);
-        Product_mall product_mall = pMallRepository.getLowMall(pd_name).get();
-        ProductMallDTO productMallDTO = mall_build_dto(product_mall);
+        ProductMall productMall = pMallRepository.getLowMall(pdName).get();
+        ProductMallDTO productMallDTO = mall_build_dto(productMall);
         getUserProductInfo.put("lowmall", productMallDTO);
 
-        List<Product> relatedList = pRepository.getRelatedList(pd_name);
+        List<Product> relatedList = pRepository.getRelatedList(pdName);
         List<ProductDTO> related_DTO = new ArrayList<>();
         if (relatedList.size()>0) {
             for (Product relatedProduct : relatedList) {
@@ -98,9 +97,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductMallDTO getLowProduct_mall(String pd_name) {
-        Product_mall product_mall = pMallRepository.getLowMall(pd_name).get();
-        ProductMallDTO productMallDTO = mall_build_dto(product_mall);
+    public ProductMallDTO getLowProduct_mall(String pdName) {
+        ProductMall productMall = pMallRepository.getLowMall(pdName).get();
+        ProductMallDTO productMallDTO = mall_build_dto(productMall);
         return productMallDTO;
     }
     

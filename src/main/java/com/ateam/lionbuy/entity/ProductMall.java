@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -22,22 +23,22 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class Product_mall {
+public class ProductMall {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pmno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="pd_name", referencedColumnName = "pd_name")
+//    @JoinColumn(name="pdName", referencedColumnName = "pdName")
     private Product product;
 
-    private String mall_name;
+    private String mallName;
     private Long price;
-    private LocalDateTime now_date;
+    private LocalDate nowDate;
 
     @PrePersist
     public void PrePersist() {
-        now_date = LocalDateTime.now();
+        nowDate = LocalDate.now();
     }
 }

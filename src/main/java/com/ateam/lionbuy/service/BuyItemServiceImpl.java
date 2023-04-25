@@ -1,6 +1,7 @@
 package com.ateam.lionbuy.service;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ateam.lionbuy.dto.BuyItemDTO;
-import com.ateam.lionbuy.entity.Buy_item;
-import com.ateam.lionbuy.entity.User_info;
+import com.ateam.lionbuy.entity.BuyItem;
+import com.ateam.lionbuy.entity.UserInfo;
 import com.ateam.lionbuy.repository.BuyItemRepository;
 import com.ateam.lionbuy.repository.UserRepository;
 
@@ -27,17 +28,17 @@ public class BuyItemServiceImpl implements BuyItemService {
 
   @Override
   public String addBuyList(BuyItemDTO buyItemDTO) {
-    User_info user_info = uRepository.getInfo(buyItemDTO.getUser_email()).get();
-    Buy_item buy_item = buyItem_build_entity(buyItemDTO, user_info);
-    bRepository.save(buy_item);
+    UserInfo userInfo = uRepository.getInfo(buyItemDTO.getUserEmail()).get();
+    BuyItem buyItem = buyItem_build_entity(buyItemDTO, userInfo);
+    bRepository.save(buyItem);
     return "성공";
   }
 
   @Override
-  public List<BuyItemDTO> getAccountbook(Long month, Long year, String user_email) {
-    List<Buy_item> buy_itemList = bRepository.get_buyitems(month, year, user_email);
+  public List<BuyItemDTO> getAccountbook(Long month, Long year, String userEmail) {
+    List<BuyItem> buy_itemList = bRepository.get_buyitems(month, year, userEmail);
     List<BuyItemDTO> buyitem_dto = new ArrayList<BuyItemDTO>();
-    for (Buy_item buyitem : buy_itemList) {
+    for (BuyItem buyitem : buy_itemList) {
       BuyItemDTO buyItemDTO = buyItem_build_dto(buyitem);
       buyitem_dto.add(buyItemDTO);
     }
@@ -46,8 +47,8 @@ public class BuyItemServiceImpl implements BuyItemService {
 
   @Override
   @Transactional
-  public void deleteBuyItem(String pd_name, LocalDateTime buy_date) {
-    bRepository.delete_buy(pd_name, buy_date);
+  public void deleteBuyItem(String pdName, LocalDate buyDate) {
+    bRepository.delete_buy(pdName, buyDate);
   }
 }
 

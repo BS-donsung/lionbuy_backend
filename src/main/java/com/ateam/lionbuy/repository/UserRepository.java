@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ateam.lionbuy.entity.User_info;
+import com.ateam.lionbuy.entity.UserInfo;
 
-public interface UserRepository extends JpaRepository<User_info, Long>{
+public interface UserRepository extends JpaRepository<UserInfo, Long>{
     
-    @Query("select u from User_info u where u.user_email=:user_email")
-    Optional<User_info> getInfo(@Param("user_email") String user_email);
+    @Query("select u from UserInfo u where u.userEmail=:userEmail")
+    Optional<UserInfo> getInfo(@Param("userEmail") String userEmail);
 }

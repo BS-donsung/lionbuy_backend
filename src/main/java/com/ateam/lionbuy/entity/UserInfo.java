@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -20,23 +21,23 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class User_info {
+public class UserInfo {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_num;
+    private Long userNum;
     
     @Column(unique = true)
-    private String user_email;
+    private String userEmail;
 
-    private String user_pw;
-    private String user_name;
-    private String user_gender;
-    private String user_birth;
-    private LocalDateTime join_date;
+    private String userPw;
+    private String userName;
+    private String userGender;
+    private String userBirth;
+    private LocalDate joinDate;
     
     @PrePersist
     public void PrePersist() {
-        join_date = LocalDateTime.now();
+        joinDate = LocalDate.now();
     }
 }

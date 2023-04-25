@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -40,20 +41,20 @@ public class WishItemController {
   }
 
   @GetMapping(value = "")
-  public ResponseEntity<List<ProductDTO>> getWish(@RequestParam("user_email") String user_email) {
-    List<ProductDTO> userProductDtoData = wService.userProductList(user_email);
+  public ResponseEntity<List<ProductDTO>> getWish(@RequestParam("userEmail") String userEmail) {
+    List<ProductDTO> userProductDtoData = wService.userProductList(userEmail);
     return ResponseEntity.ok().body(userProductDtoData);
   }
 
   @GetMapping(value = "/detail")
-  public ResponseEntity<Map<String, Object>> wishDetail(@RequestParam("pd_name") String pd_name) {
-    Map<String, Object> wishProductDetail = pService.getProduct(pd_name);
+  public ResponseEntity<Map<String, Object>> wishDetail(@RequestParam("pdName") String pdName) {
+    Map<String, Object> wishProductDetail = pService.getProduct(pdName);
     return ResponseEntity.ok().body(wishProductDetail);
   }
 
   @DeleteMapping(value = "")
-  public ResponseEntity<String> delete_wishItem(@RequestParam("product") String pd_name, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS") LocalDateTime choice_date ) {
-    wService.deleteBuyItem(pd_name, choice_date);
+  public ResponseEntity<String> delete_wishItem(@RequestParam("product") String pdName, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS") LocalDate choiceDate ) {
+    wService.deleteBuyItem(pdName, choiceDate);
     return ResponseEntity.ok().body("성공");
   }
 }

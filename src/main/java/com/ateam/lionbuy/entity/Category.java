@@ -26,7 +26,7 @@ public class Category {
     private Long cno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="pd_name", referencedColumnName = "pd_name")
+//    @JoinColumn(name="pdName", referencedColumnName = "pdName")
     private Product product;
 
     private String categories;

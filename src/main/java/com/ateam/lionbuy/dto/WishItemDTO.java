@@ -1,12 +1,11 @@
 package com.ateam.lionbuy.dto;
 
-import com.ateam.lionbuy.entity.Product;
-import com.ateam.lionbuy.entity.User_info;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,11 +14,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class WishItemDTO {
 
-  private Long user_num;
-  private String pd_name;
-  private String image_url;
-  private String pd_lowprice;
+  private Long userNum;
+  private String pdName;
+  private String imageUrl;
+  private String pdLowprice;
   private Long priority;
-  private LocalDateTime choice_date;
+  private LocalDate choiceDate;
 
 }

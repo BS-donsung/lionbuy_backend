@@ -1,5 +1,6 @@
 package com.ateam.lionbuy.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,14 +37,14 @@ public class BuyItemController {
   @GetMapping(value = "/accountbook")
   public ResponseEntity<List<BuyItemDTO>> get_accountbook(@RequestParam("month") Long month,
                                               @RequestParam("year") Long year,
-                                              @RequestParam("user_email") String user_email) {
-    List<BuyItemDTO> buyItemDTOS = bService.getAccountbook(month, year, user_email);
+                                              @RequestParam("userEmail") String userEmail) {
+    List<BuyItemDTO> buyItemDTOS = bService.getAccountbook(month, year, userEmail);
     return ResponseEntity.ok().body(buyItemDTOS);
   }
 
   @DeleteMapping(value = "/accountbook")
-  public ResponseEntity<String> delete_buyItem(@RequestParam("product") String pd_name, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS") LocalDateTime buy_date ) {
-    bService.deleteBuyItem(pd_name, buy_date);
+  public ResponseEntity<String> delete_buyItem(@RequestParam("product") String pdName, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate buyDate ) {
+    bService.deleteBuyItem(pdName, LocalDate.from(buyDate));
     return ResponseEntity.ok().body("성공");
   }
 
