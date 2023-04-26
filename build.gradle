@@ -2,6 +2,10 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.5'
 	id 'io.spring.dependency-management' version '1.1.0'
+
+	id 'org.jetbrains.kotlin.jvm' version '1.7.22'
+	id "org.jetbrains.kotlin.plugin.spring" version "1.7.22"
+	id "org.jetbrains.kotlin.plugin.jpa" version "1.8.20"
 }
 
 group = 'com.ateam'
@@ -11,6 +15,12 @@ sourceCompatibility = '17'
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
+	}
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+	kotlinOptions {
+		jvmTarget = sourceCompatibility
 	}
 }
 
@@ -32,6 +42,17 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.jsoup/jsoup
 	implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.4'
 
+
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	// security setting
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	testImplementation("org.springframework.security:spring-security-test")
+	// jwt parser
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+	// jackson
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
 tasks.named('test') {
