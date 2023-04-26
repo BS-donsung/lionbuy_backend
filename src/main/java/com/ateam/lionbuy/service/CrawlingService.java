@@ -33,9 +33,9 @@ public interface CrawlingService {
 
     default Product product_build(Map<String, Object> returnMap) {
         Product product = Product.builder()
-            .pdName(String.valueOf(returnMap.get("productTitle")))
-            .imageUrl(String.valueOf(returnMap.get("imageUrl")))
-            .pdLowprice(String.valueOf(returnMap.get("lowPrice")))
+            .pdname(String.valueOf(returnMap.get("productTitle")))
+            .imageurl(String.valueOf(returnMap.get("imageUrl")))
+            .pdlowprice(String.valueOf(returnMap.get("lowPrice")))
             .build();
         return product;
     }
@@ -51,7 +51,7 @@ public interface CrawlingService {
     default ProductLowprice lowprice_build(Product product, Map<String, Object> returnmap) {
         ProductLowprice lowprice = ProductLowprice.builder()
             .product(product)
-            .pdLowprice(String.valueOf(returnmap.get("lowPrice")))
+            .pdlowprice(String.valueOf(returnmap.get("lowPrice")))
             .build();
         return lowprice;
     }
@@ -59,7 +59,7 @@ public interface CrawlingService {
     default ProductMall mall_build_entity(Product product, Map<String, Object> returnmap, String mallName, Long price) {
         ProductMall mall = ProductMall.builder()
             .product(product)
-            .mallName(mallName)
+            .mallname(mallName)
             .price(price)
             .build();
         return mall;

@@ -20,7 +20,7 @@ public class Product {
     private Long pno;
 
     @Column(unique = true)
-    private String pdName;
-    private String imageUrl;
-    private String pdLowprice;
+    private String pdname;
+    private String imageurl;
+    private String pdlowprice;
 }

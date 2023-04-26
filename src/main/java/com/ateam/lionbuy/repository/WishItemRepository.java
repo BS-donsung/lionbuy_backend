@@ -15,10 +15,10 @@ import com.ateam.lionbuy.entity.WishItem;
 
 public interface WishItemRepository extends JpaRepository<WishItem, Long> {
 
-    @Query("select w.product from WishItem w join w.userInfo u where u.userEmail=:userEmail")
+    @Query("select w.product from WishItem w join w.userinfo u where u.useremail=:userEmail")
     Optional<List<Product>> wish_product(@Param("userEmail") String userEmail);
 
     @Modifying
-    @Query("delete from WishItem w where w.product.pdName=:pdName and w.choiceDate=:choiceDate")
-    int delete_wish(@Param("pdName") String pdName, @Param("choiceDate") LocalDate choiceDate);
+    @Query("delete from WishItem w where w.product.pno=:pno and w.choicedate=:choiceDate")
+    int delete_wish(@Param("pno") Long pno, @Param("choiceDate") LocalDate choiceDate);
 }

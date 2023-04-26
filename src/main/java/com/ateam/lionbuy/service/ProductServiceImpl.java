@@ -69,18 +69,23 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Map<String, Object> getProduct(String pdName) {
         Map<String, Object> getUserProductInfo = new HashMap<String, Object>();
-        Product product = pRepository.getProduct(pdName).get();
-        ProductDTO productDTO = product_build_dto(product);
+
+        Product product1 = pRepository.getPno(pdName).get();
+        ProductDTO productDTO = product_build_dto(product1);
+
         getUserProductInfo.put("product", productDTO);
-        Set<String> tags = categoryService.relation_categories(pdName);
+
+        Set<String> tags = categoryService.relation_categories(product1.getPno());
         getUserProductInfo.put("tags", tags);
-        List<ProductLowprice> productLowEntityList = pLowpriceRepository.getProductLowprice(product.getPdName()).get();
+
+        List<ProductLowprice> productLowEntityList = pLowpriceRepository.getProductLowprice(product1.getPno()).get();
         List<ProductLowpriceDTO> productLowDtoList = new ArrayList<ProductLowpriceDTO>();
         for (int i = 0; i < productLowEntityList.size(); i++) {
             productLowDtoList.add(lowprice_build_dto(productLowEntityList.get(i)));
         }
         getUserProductInfo.put("lowprice", productLowDtoList);
-        ProductMall productMall = pMallRepository.getLowMall(pdName).get();
+
+        ProductMall productMall = pMallRepository.getLowMall(product1.getPno()).get();
         ProductMallDTO productMallDTO = mall_build_dto(productMall);
         getUserProductInfo.put("lowmall", productMallDTO);
 
@@ -93,12 +98,14 @@ public class ProductServiceImpl implements ProductService{
             }
             getUserProductInfo.put("related", related_DTO);
         }
+
         return getUserProductInfo;
     }
 
     @Override
     public ProductMallDTO getLowProduct_mall(String pdName) {
-        ProductMall productMall = pMallRepository.getLowMall(pdName).get();
+        Product product1 = pRepository.getPno(pdName).get();
+        ProductMall productMall = pMallRepository.getLowMall(product1.getPno()).get();
         ProductMallDTO productMallDTO = mall_build_dto(productMall);
         return productMallDTO;
     }

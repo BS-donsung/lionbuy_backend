@@ -30,15 +30,15 @@ public class ProductMall {
     private Long pmno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name="pdName", referencedColumnName = "pdName")
+    @JoinColumn(name="pno", referencedColumnName = "pno")
     private Product product;
 
-    private String mallName;
+    private String mallname;
     private Long price;
-    private LocalDate nowDate;
+    private LocalDate nowdate;
 
     @PrePersist
     public void PrePersist() {
-        nowDate = LocalDate.now();
+        nowdate = LocalDate.now();
     }
 }

@@ -23,19 +23,19 @@ public class WishItem {
     private Long wno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userNum", referencedColumnName = "userNum")
-    private UserInfo userInfo;
+    @JoinColumn(name="usernum", referencedColumnName = "usernum")
+    private UserInfo userinfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name="pdName", referencedColumnName = "pdName")
+    @JoinColumn(name="pno", referencedColumnName = "pno")
     private Product product;
 
     private Long priority;
-    private LocalDate choiceDate;
+    private LocalDate choicedate;
 
     @PrePersist
     public void PrePersist() {
-        choiceDate = LocalDate.now();
+        choicedate = LocalDate.now();
     }
 
 }

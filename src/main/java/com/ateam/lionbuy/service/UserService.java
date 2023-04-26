@@ -15,24 +15,24 @@ public interface UserService {
 
     default UserInfo user_build_entity(UserDTO userdto) {
         UserInfo user_info = UserInfo.builder()
-            .userEmail(userdto.getUserEmail())
-            .userPw(userdto.getUserPw())
-            .userName(userdto.getUserName())
-            .userGender(userdto.getUserGender())
-            .userBirth(userdto.getUserBirth())
+            .useremail(userdto.getUserEmail())
+            .userpw(userdto.getUserPw())
+            .username(userdto.getUserName())
+            .usergender(userdto.getUserGender())
+            .userbirth(userdto.getUserBirth())
             .build();
         return user_info;
     }
 
     default UserDTO user_build_dto(UserInfo userInfo) {
         UserDTO userDTO = UserDTO.builder()
-            .userNum(userInfo.getUserNum())
-            .userEmail(userInfo.getUserEmail())
-            .userPw(userInfo.getUserPw())
-            .userName(userInfo.getUserName())
-            .userGender(userInfo.getUserGender())
-            .userBirth(userInfo.getUserBirth())
-            .joinDate(userInfo.getJoinDate())
+            .userNum(userInfo.getUsernum())
+            .userEmail(userInfo.getUseremail())
+            .userPw(userInfo.getUserpw())
+            .userName(userInfo.getUsername())
+            .userGender(userInfo.getUsergender())
+            .userBirth(userInfo.getUserbirth())
+            .joinDate(userInfo.getJoindate())
             .build();
         return userDTO;
     }

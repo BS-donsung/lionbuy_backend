@@ -30,20 +30,20 @@ public class BuyItem {
     private Long bno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userNum", referencedColumnName = "userNum")
-    private UserInfo userInfo;
+    @JoinColumn(name="usernum", referencedColumnName = "usernum")
+    private UserInfo userinfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name="pdName", referencedColumnName = "pdName")
+    @JoinColumn(name="pno", referencedColumnName = "pno")
     private Product product;
 
     private Long price;
-    private LocalDate buyDate;
-    private String cardBrand;
-    private String cardStyle;
+    private LocalDate buydate;
+    private String cardbrand;
+    private String cardstyle;
 
     @PrePersist
     public void PrePersist() {
-        buyDate = LocalDate.now();
+        buydate = LocalDate.now();
     }
 }

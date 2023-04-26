@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ateam.lionbuy.entity.Product;
+import com.ateam.lionbuy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +28,14 @@ public class BuyItemServiceImpl implements BuyItemService {
   @Autowired
   private UserRepository uRepository;
 
+  @Autowired
+  private ProductRepository pRepository;
+
   @Override
   public String addBuyList(BuyItemDTO buyItemDTO) {
     UserInfo userInfo = uRepository.getInfo(buyItemDTO.getUserEmail()).get();
-    BuyItem buyItem = buyItem_build_entity(buyItemDTO, userInfo);
+    Product product = pRepository.getPno(buyItemDTO.getPdName()).get();
+    BuyItem buyItem = buyItem_build_entity(buyItemDTO, userInfo, product);
     bRepository.save(buyItem);
     return "성공";
   }
@@ -48,7 +54,8 @@ public class BuyItemServiceImpl implements BuyItemService {
   @Override
   @Transactional
   public void deleteBuyItem(String pdName, LocalDate buyDate) {
-    bRepository.delete_buy(pdName, buyDate);
+    Product product = pRepository.getPno(pdName).get();
+    bRepository.delete_buy(product.getPno(), buyDate);
   }
 }
 

@@ -25,19 +25,19 @@ public class UserInfo {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userNum;
+    private Long usernum;
     
     @Column(unique = true)
-    private String userEmail;
+    private String useremail;
 
-    private String userPw;
-    private String userName;
-    private String userGender;
-    private String userBirth;
-    private LocalDate joinDate;
+    private String userpw;
+    private String username;
+    private String usergender;
+    private String userbirth;
+    private LocalDate joindate;
     
     @PrePersist
     public void PrePersist() {
-        joinDate = LocalDate.now();
+        joindate = LocalDate.now();
     }
 }

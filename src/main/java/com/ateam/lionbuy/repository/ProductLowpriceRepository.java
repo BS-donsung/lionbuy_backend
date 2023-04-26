@@ -11,6 +11,6 @@ import com.ateam.lionbuy.entity.ProductLowprice;
 
 public interface ProductLowpriceRepository extends JpaRepository<ProductLowprice, Long>{
     
-    @Query("select pl from ProductLowprice pl where pl.product.pdName=:pdName")
-    Optional<List<ProductLowprice>> getProductLowprice(@Param("pdName") String pdName);
+    @Query("select pl from ProductLowprice pl where pl.product.pno=:pno")
+    Optional<List<ProductLowprice>> getProductLowprice(@Param("pno") Long pno);
 }
