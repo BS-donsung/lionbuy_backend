@@ -9,15 +9,21 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.security.web.util.matcher.OrRequestMatcher
 import org.springframework.util.StreamUtils
 import java.nio.charset.Charset
 
 class JWTAuthenticationFilter(
     val objectMapper: ObjectMapper
-): AbstractAuthenticationProcessingFilter( AntPathRequestMatcher("/login") ) {
-
+): AbstractAuthenticationProcessingFilter(
+    OrRequestMatcher(
+        AntPathRequestMatcher("/login"),
+        AntPathRequestMatcher("/auth/login")
+        )
+) {
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
         val parsedData = objectMapper.readValue<AuthDTO>(request.getBody())
+
         return authenticationManager.authenticate(parsedData.toAuthentication())
     }
 
