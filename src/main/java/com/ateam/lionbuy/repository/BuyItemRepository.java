@@ -13,10 +13,10 @@ import com.ateam.lionbuy.entity.BuyItem;
 
 public interface BuyItemRepository extends JpaRepository<BuyItem, Long> {
 
-    @Query("select b from BuyItem b where month(b.buyDate)=:month and year(b.buyDate)=:year and b.userInfo.userEmail=:userEmail ")
+    @Query("select b from BuyItem b where month(b.buydate)=:month and year(b.buydate)=:year and b.userinfo.useremail=:userEmail ")
     List<BuyItem> get_buyitems(@Param("month") Long month, @Param("year") Long year, @Param("userEmail") String userEmail);
 
     @Modifying
-    @Query("delete from BuyItem b where b.product.pdName=:pdName and b.buyDate=:buyDate")
-    int delete_buy(@Param("pdName") String pdName, @Param("buyDate") LocalDate buyDate);
+    @Query("delete from BuyItem b where b.product.pno=:pno and b.buydate=:buyDate")
+    int delete_buy(@Param("pno") Long pno, @Param("buyDate") LocalDate buydate);
 }

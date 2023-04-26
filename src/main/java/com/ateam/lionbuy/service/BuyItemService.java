@@ -17,27 +17,25 @@ public interface BuyItemService {
 
   void deleteBuyItem(String pdName, LocalDate buyDate);
 
-  default BuyItem buyItem_build_entity(BuyItemDTO buyItemDTO, UserInfo userInfo) {
-    Product product = Product.builder()
-        .pdName(buyItemDTO.getPdName())
-        .build();
+  default BuyItem buyItem_build_entity(BuyItemDTO buyItemDTO, UserInfo userInfo, Product product) {
     BuyItem buyItem = BuyItem.builder()
-        .userInfo(userInfo)
+        .userinfo(userInfo)
         .product(product)
         .price(buyItemDTO.getPrice())
-        .cardBrand(buyItemDTO.getCardBrand())
-        .cardStyle(buyItemDTO.getCardStyle())
+        .cardbrand(buyItemDTO.getCardBrand())
+        .cardstyle(buyItemDTO.getCardStyle())
         .build();
     return buyItem;
   }
 
   default BuyItemDTO buyItem_build_dto(BuyItem buyItem) {
     BuyItemDTO buyItemDTO = BuyItemDTO.builder()
-        .pdName(buyItem.getProduct().getPdName())
+        .userEmail(buyItem.getUserinfo().getUseremail())
+        .pdName(buyItem.getProduct().getPdname())
         .price(buyItem.getPrice())
-        .buyDate(buyItem.getBuyDate())
-        .cardBrand(buyItem.getCardBrand())
-        .cardStyle(buyItem.getCardStyle())
+        .buyDate(buyItem.getBuydate())
+        .cardBrand(buyItem.getCardbrand())
+        .cardStyle(buyItem.getCardstyle())
         .build();
     return buyItemDTO;
   }

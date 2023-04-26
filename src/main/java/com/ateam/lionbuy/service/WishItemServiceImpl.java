@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ateam.lionbuy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,13 @@ public class WishItemServiceImpl implements WishItemService {
   @Autowired
   private UserRepository uRepository;
 
+  @Autowired
+  private ProductRepository pRepository;
+
   @Override
   public String addWishList(WishItemDTO wishItemDTO) {
-    WishItem wishItem = wishItem_build_entity(wishItemDTO);
+    Product product1 = pRepository.getPno(wishItemDTO.getPdName()).get();
+    WishItem wishItem = wishItem_build_entity(product1, wishItemDTO);
     wRepository.save(wishItem);
     return "성공";
   }
@@ -46,6 +51,7 @@ public class WishItemServiceImpl implements WishItemService {
   @Override
   @Transactional
   public void deleteBuyItem(String pdName, LocalDate choiceDate) {
-    wRepository.delete_wish(pdName, choiceDate);
+    Product product = pRepository.getPno(pdName).get();
+    wRepository.delete_wish(product.getPno(), choiceDate);
   }
 }

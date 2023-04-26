@@ -18,28 +18,26 @@ public interface WishItemService {
 
   void deleteBuyItem(String pdName, LocalDate buyDate);
 
-  default WishItem wishItem_build_entity(WishItemDTO wishItemDTO) {
+  default WishItem wishItem_build_entity(Product product, WishItemDTO wishItemDTO) {
     UserInfo userInfo = UserInfo.builder()
-        .userNum(wishItemDTO.getUserNum())
-        .build();
-    Product product = Product.builder()
-        .pdName(wishItemDTO.getPdName())
+        .usernum(wishItemDTO.getUserNum())
         .build();
     WishItem wishItem = WishItem.builder()
-        .userInfo(userInfo)
+        .userinfo(userInfo)
         .product(product)
         .priority(wishItemDTO.getPriority())
-        .choiceDate(wishItemDTO.getChoiceDate())
+        .choicedate(wishItemDTO.getChoiceDate())
         .build();
     return wishItem;
   }
 
   default ProductDTO product_build_dto(Product product) {
     ProductDTO productDTO = ProductDTO.builder()
-      .pdName(product.getPdName())
-      .imageUrl(product.getImageUrl())
-      .pdLowprice(product.getPdLowprice())
-      .build();
+        .pno(product.getPno())
+        .pdName(product.getPdname())
+        .imageUrl(product.getImageurl())
+        .pdLowprice(product.getPdlowprice())
+        .build();
     return productDTO;
   }
 }

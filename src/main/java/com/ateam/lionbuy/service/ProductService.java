@@ -21,26 +21,26 @@ public interface ProductService {
     default ProductDTO product_build_dto(Product product){
         ProductDTO productDTO = ProductDTO.builder()
             .pno(product.getPno())
-            .pdName(product.getPdName())
-            .imageUrl(product.getImageUrl())
-            .pdLowprice(product.getPdLowprice())
+            .pdName(product.getPdname())
+            .imageUrl(product.getImageurl())
+            .pdLowprice(product.getPdlowprice())
             .build();
         return productDTO;
     }
 
     default ProductLowpriceDTO lowprice_build_dto(ProductLowprice productLowprice) {
         ProductLowpriceDTO productLowpriceDTO = ProductLowpriceDTO.builder()
-            .pdName(productLowprice.getProduct().getPdName())
-            .pdLowprice(Long.valueOf(productLowprice.getPdLowprice()))
-            .nowDate(productLowprice.getNowDate())
+            .pdName(productLowprice.getProduct().getPdname())
+            .pdLowprice(Long.valueOf(productLowprice.getPdlowprice()))
+            .nowDate(productLowprice.getNowdate())
             .build();
         return productLowpriceDTO;
     }
 
     default ProductMallDTO mall_build_dto(ProductMall productMall) {
         ProductMallDTO productMallDTO = ProductMallDTO.builder()
-            .pdName(productMall.getProduct().getPdName())
-            .mallName(productMall.getMallName())
+            .pdName(productMall.getProduct().getPdname())
+            .mallName(productMall.getMallname())
             .price(productMall.getPrice())
             .build();
         return productMallDTO;

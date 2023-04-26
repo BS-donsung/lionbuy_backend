@@ -10,6 +10,6 @@ import com.ateam.lionbuy.entity.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long>{
     
-    @Query("select distinct c from Category c where c.product.pdName=:pdName")
-    List<Category> get_categories(@Param("pdName") String pdName);
+    @Query("select distinct c from Category c where c.product.pno=:pno")
+    List<Category> get_categories(@Param("pno") Long pno);
 }

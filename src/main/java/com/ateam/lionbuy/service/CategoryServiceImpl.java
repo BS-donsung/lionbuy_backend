@@ -24,8 +24,8 @@ public class CategoryServiceImpl implements CategoryService{
     private CategoryRepository cRepository;
 
     @Override
-    public Set<String> relation_categories(String pdName) {
-        List<Category> cateGory = cRepository.get_categories(pdName);
+    public Set<String> relation_categories(Long pno) {
+        List<Category> cateGory = cRepository.get_categories(pno);
         Set<String> categories_list = new HashSet<String>();
         for (int i = 0; i < cateGory.size(); i++) {
             String[] categories = cateGory.get(i).getCategories().split("\\|");
