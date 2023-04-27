@@ -39,6 +39,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3'
 	// https://mvnrepository.com/artifact/org.jsoup/jsoup
 	implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.4'
 
@@ -51,8 +53,6 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
-	// jackson
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
 tasks.named('test') {
