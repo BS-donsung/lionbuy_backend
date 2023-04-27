@@ -16,6 +16,8 @@ public interface CrawlingService {
 
     String[] getKeyword(String url);
 
+    void periodic_crawling();
+
     String start_crawling(String keyword);
 
 
