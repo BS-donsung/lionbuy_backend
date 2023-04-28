@@ -26,7 +26,6 @@ public interface UserService {
 
     default UserDTO user_build_dto(UserInfo userInfo) {
         UserDTO userDTO = UserDTO.builder()
-            .userNum(userInfo.getUsernum())
             .userEmail(userInfo.getUseremail())
             .userPw(userInfo.getUserpw())
             .userName(userInfo.getUsername())

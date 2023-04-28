@@ -19,6 +19,6 @@ public interface WishItemRepository extends JpaRepository<WishItem, Long> {
     Optional<List<Product>> wish_product(@Param("userEmail") String userEmail);
 
     @Modifying
-    @Query("delete from WishItem w where w.product.pno=:pno and w.choicedate=:choiceDate")
-    int delete_wish(@Param("pno") Long pno, @Param("choiceDate") LocalDate choiceDate);
+    @Query("delete from WishItem w where w.product.pno=:pno and w.choicedate=:choiceDate and w.userinfo.usernum=:userNum")
+    int delete_wish(@Param("pno") Long pno, @Param("choiceDate") LocalDate choiceDate, @Param("userNum") Long userNum);
 }

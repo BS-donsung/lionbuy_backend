@@ -15,7 +15,7 @@ public interface BuyItemService {
 
   List<BuyItemDTO> getAccountbook(Long month, Long year, String userEmail);
 
-  void deleteBuyItem(String pdName, LocalDate buyDate);
+  void deleteBuyItem(String pdName, LocalDate buyDate, String userEmail);
 
   default BuyItem buyItem_build_entity(BuyItemDTO buyItemDTO, UserInfo userInfo, Product product) {
     BuyItem buyItem = BuyItem.builder()

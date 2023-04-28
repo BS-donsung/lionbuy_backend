@@ -14,13 +14,12 @@ public interface ProductService {
     
     List<ProductDTO> findByTags(String[] tags);
 
-    Map<String, Object> getProduct(String pd_name);
+    Map<String, Object> getProduct(String pdname);
 
-    ProductMallDTO getLowProduct_mall(String pd_name);
+    ProductMallDTO getLowProduct_mall(String pdname);
 
     default ProductDTO product_build_dto(Product product){
         ProductDTO productDTO = ProductDTO.builder()
-            .pno(product.getPno())
             .pdName(product.getPdname())
             .imageUrl(product.getImageurl())
             .pdLowprice(product.getPdlowprice())

@@ -89,7 +89,7 @@ public class ProductServiceImpl implements ProductService{
         ProductMallDTO productMallDTO = mall_build_dto(productMall);
         getUserProductInfo.put("lowmall", productMallDTO);
 
-        List<Product> relatedList = pRepository.getRelatedList(pdName);
+        List<Product> relatedList = pRepository.getRelatedList(pdName).get();
         List<ProductDTO> related_DTO = new ArrayList<>();
         if (relatedList.size()>0) {
             for (Product relatedProduct : relatedList) {

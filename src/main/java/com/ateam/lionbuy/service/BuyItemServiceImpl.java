@@ -53,9 +53,10 @@ public class BuyItemServiceImpl implements BuyItemService {
 
   @Override
   @Transactional
-  public void deleteBuyItem(String pdName, LocalDate buyDate) {
+  public void deleteBuyItem(String pdName, LocalDate buyDate, String userEmail) {
+    UserInfo userInfo = uRepository.getInfo(userEmail).get();
     Product product = pRepository.getPno(pdName).get();
-    bRepository.delete_buy(product.getPno(), buyDate);
+    bRepository.delete_buy(product.getPno(), buyDate, userInfo.getUsernum());
   }
 }
 

@@ -43,10 +43,11 @@ public class BuyItemController {
   }
 
   @DeleteMapping(value = "/accountbook")
-  public ResponseEntity<String> delete_buyItem(@RequestParam("product") String pdName, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate buyDate ) {
-    bService.deleteBuyItem(pdName, LocalDate.from(buyDate));
+  public ResponseEntity<String> delete_buyItem(@RequestParam("product") String pdName,
+                                               @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate buyDate,
+                                               @RequestParam("userEmail") String userEmail) {
+    bService.deleteBuyItem(pdName, LocalDate.from(buyDate), userEmail);
     return ResponseEntity.ok().body("성공");
+
   }
-
-
 }

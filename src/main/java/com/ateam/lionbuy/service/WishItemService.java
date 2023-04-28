@@ -16,12 +16,9 @@ public interface WishItemService {
 
   List<ProductDTO> userProductList(String userEmail);
 
-  void deleteBuyItem(String pdName, LocalDate buyDate);
+  void deleteWishItem(String pdName, LocalDate choiceDate, String userEmail);
 
-  default WishItem wishItem_build_entity(Product product, WishItemDTO wishItemDTO) {
-    UserInfo userInfo = UserInfo.builder()
-        .usernum(wishItemDTO.getUserNum())
-        .build();
+  default WishItem wishItem_build_entity(Product product, UserInfo userInfo, WishItemDTO wishItemDTO) {
     WishItem wishItem = WishItem.builder()
         .userinfo(userInfo)
         .product(product)
@@ -33,7 +30,6 @@ public interface WishItemService {
 
   default ProductDTO product_build_dto(Product product) {
     ProductDTO productDTO = ProductDTO.builder()
-        .pno(product.getPno())
         .pdName(product.getPdname())
         .imageUrl(product.getImageurl())
         .pdLowprice(product.getPdlowprice())
