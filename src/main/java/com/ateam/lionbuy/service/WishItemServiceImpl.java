@@ -1,18 +1,18 @@
 package com.ateam.lionbuy.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ateam.lionbuy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ateam.lionbuy.dto.ProductDTO;
 import com.ateam.lionbuy.dto.WishItemDTO;
 import com.ateam.lionbuy.entity.Product;
+import com.ateam.lionbuy.entity.UserInfo;
 import com.ateam.lionbuy.entity.WishItem;
+import com.ateam.lionbuy.repository.ProductRepository;
 import com.ateam.lionbuy.repository.UserRepository;
 import com.ateam.lionbuy.repository.WishItemRepository;
 
@@ -32,8 +32,9 @@ public class WishItemServiceImpl implements WishItemService {
 
   @Override
   public String addWishList(WishItemDTO wishItemDTO) {
-    Product product1 = pRepository.getPno(wishItemDTO.getPdName()).get();
-    WishItem wishItem = wishItem_build_entity(product1, wishItemDTO);
+    UserInfo userInfo = uRepository.getInfo(wishItemDTO.getUserEmail()).get();
+    Product product = pRepository.getPno(wishItemDTO.getPdName()).get();
+    WishItem wishItem = wishItem_build_entity(product, userInfo, wishItemDTO);
     wRepository.save(wishItem);
     return "성공";
   }
@@ -50,8 +51,9 @@ public class WishItemServiceImpl implements WishItemService {
 
   @Override
   @Transactional
-  public void deleteBuyItem(String pdName, LocalDate choiceDate) {
+  public void deleteWishItem(String pdName, LocalDate choiceDate, String userEmail) {
+    UserInfo userInfo = uRepository.getInfo(userEmail).get();
     Product product = pRepository.getPno(pdName).get();
-    wRepository.delete_wish(product.getPno(), choiceDate);
+    wRepository.delete_wish(product.getPno(), choiceDate, userInfo.getUsernum());
   }
 }
