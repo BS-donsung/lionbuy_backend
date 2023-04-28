@@ -53,8 +53,10 @@ public class WishItemController {
   }
 
   @DeleteMapping(value = "")
-  public ResponseEntity<String> delete_wishItem(@RequestParam("product") String pdName, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate choiceDate ) {
-    wService.deleteBuyItem(pdName, choiceDate);
+  public ResponseEntity<String> delete_wishItem(@RequestParam("product") String pdName,
+                                                @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate choiceDate,
+                                                @RequestParam("userEmail") String userEmail) {
+    wService.deleteWishItem(pdName, choiceDate, userEmail);
     return ResponseEntity.ok().body("성공");
   }
 }

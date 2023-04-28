@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String login(String userEmail) {
-        Optional<UserInfo> userInfo = uRepository.getInfo(userEmail);
+        Optional<UserInfo> userInfo = uRepository.findByUseremail(userEmail);
         if(userInfo.isPresent()) {
             return "성공";
         }else {

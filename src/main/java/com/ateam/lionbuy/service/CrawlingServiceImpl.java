@@ -133,7 +133,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                             categories += String.valueOf(returnMap.get("characterValue"));
                             // DB에 넣을 데이터를 Entity에 넣어 디비에 저장
                             // category_build 메서드는 CrawlingService 클래스에 있음
-                            Product product1 = pRepository.getPno(product.getPdname()).get();
+                            Product product1 = pRepository.findByPdname(product.getPdname()).get();
                             Category category = category_build(product1, categories);
                             cRepository.save(category);
 
@@ -162,7 +162,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                     categories += String.valueOf(returnMap.get(col)) + "|";
                                 }
                                 categories += String.valueOf(returnMap.get("characterValue"));
-                                Product product1 = pRepository.getPno(product.getPdname()).get();
+                                Product product1 = pRepository.findByPdname(product.getPdname()).get();
                                 Category category = category_build(product1, categories);
                                 cRepository.save(category);
                                 ProductLowprice lowprice = lowprice_build(product1, returnMap);
@@ -185,7 +185,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                     categories += String.valueOf(returnMap.get(col)) + "|";
                                 }
                                 categories += String.valueOf(returnMap.get("characterValue"));
-                                Product product1 = pRepository.getPno(product.getPdname()).get();
+                                Product product1 = pRepository.findByPdname(product.getPdname()).get();
                                 Category category = category_build(product1, categories);
                                 cRepository.save(category);
                                 ProductLowprice lowprice = lowprice_build(product1, returnMap);

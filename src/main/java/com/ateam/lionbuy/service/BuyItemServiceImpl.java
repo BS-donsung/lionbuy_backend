@@ -9,6 +9,7 @@ import java.util.List;
 import com.ateam.lionbuy.entity.Product;
 import com.ateam.lionbuy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.ateam.lionbuy.dto.BuyItemDTO;
@@ -33,8 +34,8 @@ public class BuyItemServiceImpl implements BuyItemService {
 
   @Override
   public String addBuyList(BuyItemDTO buyItemDTO) {
-    UserInfo userInfo = uRepository.getInfo(buyItemDTO.getUserEmail()).get();
-    Product product = pRepository.getPno(buyItemDTO.getPdName()).get();
+    UserInfo userInfo = uRepository.findByUseremail(buyItemDTO.getUserEmail()).get();
+    Product product = pRepository.findByPdname(buyItemDTO.getPdName()).get();
     BuyItem buyItem = buyItem_build_entity(buyItemDTO, userInfo, product);
     bRepository.save(buyItem);
     return "성공";
@@ -53,9 +54,10 @@ public class BuyItemServiceImpl implements BuyItemService {
 
   @Override
   @Transactional
-  public void deleteBuyItem(String pdName, LocalDate buyDate) {
-    Product product = pRepository.getPno(pdName).get();
-    bRepository.delete_buy(product.getPno(), buyDate);
+  public void deleteBuyItem(String pdName, LocalDate buyDate, String userEmail) {
+    UserInfo userInfo = uRepository.findByUseremail(userEmail).get();
+    Product product = pRepository.findByPdname(pdName).get();
+    bRepository.delete_buy(product.getPno(), buyDate, userInfo.getUsernum());
   }
 }
 

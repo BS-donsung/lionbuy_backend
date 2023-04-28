@@ -17,6 +17,6 @@ public interface BuyItemRepository extends JpaRepository<BuyItem, Long> {
     List<BuyItem> get_buyitems(@Param("month") Long month, @Param("year") Long year, @Param("userEmail") String userEmail);
 
     @Modifying
-    @Query("delete from BuyItem b where b.product.pno=:pno and b.buydate=:buyDate")
-    int delete_buy(@Param("pno") Long pno, @Param("buyDate") LocalDate buydate);
+    @Query("delete from BuyItem b where b.product.pno=:pno and b.buydate=:buyDate and b.userinfo.usernum=:userNum ")
+    int delete_buy(@Param("pno") Long pno, @Param("buyDate") LocalDate buyDate, @Param("userNum") Long userNum);
 }

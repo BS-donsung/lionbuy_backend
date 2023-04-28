@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDTO {
-    
-    private Long cno;
+
     private String pdName;
     private String categories;
 }
