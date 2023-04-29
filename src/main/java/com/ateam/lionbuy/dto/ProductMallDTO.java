@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ProductMallDTO {
     
+    private Long pmno;
     private String pdName;
     private String mallName;
     private Long price;

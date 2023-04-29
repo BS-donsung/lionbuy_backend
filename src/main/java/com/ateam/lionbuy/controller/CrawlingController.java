@@ -49,10 +49,4 @@ public class CrawlingController {
         Map<String, Object> productDetail = productService.getProduct(pdName);
         return ResponseEntity.ok().body(productDetail);
     }
-
-    @GetMapping(value = "")
-    public ResponseEntity<List<ProductDTO>> relation_product(@RequestParam("tags") String tags) {
-        String[] tag_list = tags.split("\\s");
-        return ResponseEntity.ok().body(productService.findByTags(tag_list));
-    }
 }
