@@ -30,6 +30,7 @@ public interface BuyItemService {
 
   default BuyItemDTO buyItem_build_dto(BuyItem buyItem) {
     BuyItemDTO buyItemDTO = BuyItemDTO.builder()
+        .bno(buyItem.getBno())
         .userEmail(buyItem.getUserinfo().getUseremail())
         .pdName(buyItem.getProduct().getPdname())
         .price(buyItem.getPrice())

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class WishItemDTO {
 
+  private Long wno;
   private String userEmail;
   private String pdName;
   private String imageUrl;

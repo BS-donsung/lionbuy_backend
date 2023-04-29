@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,36 +71,54 @@ public class ProductServiceImpl implements ProductService{
     public Map<String, Object> getProduct(String pdName) {
         Map<String, Object> getUserProductInfo = new HashMap<String, Object>();
 
-        Product product1 = pRepository.getPno(pdName).get();
-        ProductDTO productDTO = product_build_dto(product1);
-
-        getUserProductInfo.put("product", productDTO);
-
-        Set<String> tags = categoryService.relation_categories(product1.getPno());
-        getUserProductInfo.put("tags", tags);
-
-        List<ProductLowprice> productLowEntityList = pLowpriceRepository.getProductLowprice(product1.getPno()).get();
-        List<ProductLowpriceDTO> productLowDtoList = new ArrayList<ProductLowpriceDTO>();
-        for (int i = 0; i < productLowEntityList.size(); i++) {
-            productLowDtoList.add(lowprice_build_dto(productLowEntityList.get(i)));
-        }
-        getUserProductInfo.put("lowprice", productLowDtoList);
-
-        ProductMall productMall = pMallRepository.getLowMall(product1.getPno()).get();
-        ProductMallDTO productMallDTO = mall_build_dto(productMall);
-        getUserProductInfo.put("lowmall", productMallDTO);
-
-        List<Product> relatedList = pRepository.getRelatedList(pdName).get();
-        List<ProductDTO> related_DTO = new ArrayList<>();
-        if (relatedList.size()>0) {
-            for (Product relatedProduct : relatedList) {
-                ProductDTO relatedproductDTO = product_build_dto(relatedProduct);
-                related_DTO.add(relatedproductDTO);
+        Optional<Product> product1 = pRepository.getPno(pdName);
+        Product productData;
+        if(product1.isPresent()){
+            productData = product1.get();
+            ProductDTO productDTO = product_build_dto(productData);
+            getUserProductInfo.put("product", productDTO);
+    
+            Set<String> tags = categoryService.relation_categories(productData.getPno());
+            getUserProductInfo.put("tags", tags);
+    
+            Optional<List<ProductLowprice>> productLowEntityList = pLowpriceRepository.getProductLowprice(productData.getPno());
+            List<ProductLowpriceDTO> productLowDtoList = new ArrayList<ProductLowpriceDTO>();
+            List<ProductLowprice> productLowList;
+            if(productLowEntityList.isPresent()){
+                productLowList = productLowEntityList.get();
+                for (int i = 0; i < productLowList.size(); i++) {
+                    productLowDtoList.add(lowprice_build_dto(productLowList.get(i)));
+                }
+                getUserProductInfo.put("lowprice", productLowDtoList);
             }
-            getUserProductInfo.put("related", related_DTO);
+    
+            Optional<ProductMall> productMall = pMallRepository.getLowMall(productData.getPno());
+            ProductMall productMallData;
+            if(productMall.isPresent()) {
+                productMallData = productMall.get();
+                ProductMallDTO productMallDTO = mall_build_dto(productMallData);
+                getUserProductInfo.put("lowmall", productMallDTO);
+            }
+    
+            Optional<List<Product>> relatedList = pRepository.getRelatedList(pdName);
+            List<ProductDTO> related_DTO = new ArrayList<>();
+            List<Product> relatedListData;
+            if(relatedList.isPresent()) {
+                relatedListData = relatedList.get();
+                if (relatedListData.size()>0) {
+                    for (Product relatedProduct : relatedListData) {
+                        ProductDTO relatedproductDTO = product_build_dto(relatedProduct);
+                        related_DTO.add(relatedproductDTO);
+                    }
+                    getUserProductInfo.put("related", related_DTO);
+                }
+            }
+    
+            return getUserProductInfo;
+        }else {
+            return null;
         }
 
-        return getUserProductInfo;
     }
 
     @Override

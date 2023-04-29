@@ -30,6 +30,7 @@ public interface WishItemService {
 
   default ProductDTO product_build_dto(Product product) {
     ProductDTO productDTO = ProductDTO.builder()
+        .pno(product.getPno())
         .pdName(product.getPdname())
         .imageUrl(product.getImageurl())
         .pdLowprice(product.getPdlowprice())
