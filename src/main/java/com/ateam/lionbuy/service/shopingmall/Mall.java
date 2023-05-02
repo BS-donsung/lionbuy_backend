@@ -1,14 +1,20 @@
 package com.ateam.lionbuy.service.shopingmall;
 
+import java.util.ArrayList;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class Mall {
     
-    public String[] mall_parsing(String link) {
+    public Object[] mall_parsing(String link) {
         Document document;
-        String[] pd_list = new String[2];
+        Elements images;
+        ArrayList<String> imageList = new ArrayList<String>();
+        Object[] pd_list = new Object[3];
         String pdName;
         String price;
         String name = mall_name(link);
@@ -16,44 +22,81 @@ public class Mall {
             case "11번가":
                 document = jsoup_conn(link);
                 pdName = document.getElementsByTag("title").text();
-                price = document.select("span.value").first().text();
+                price = document.select("div.price_block ul.price_wrap li dl.price dd strong span.value").first().text();
+                images = document.select("#productImg img");
+                for (Element image : images) {
+                    String imageUrl = image.attr("src");
+                    imageList.add(imageUrl);
+                }
                 pd_list[0] = pdName;
                 pd_list[1] = price;
+                pd_list[2] = imageList;
                 return pd_list;
             case "옥션":
                 document = jsoup_conn(link);
                 pdName = document.getElementsByClass("itemtit").text();
                 price = document.getElementsByClass("price_real").text();
+                images = document.select(".box__viewer-container .viewer li.on img");
+                for (Element image : images) {
+                    String imageUrl = image.attr("src");
+                    imageList.add(imageUrl);
+                }
                 pd_list[0] = pdName;
                 pd_list[1] = price;
+                // pd_list[2] = imageList;
+                pd_list[2] = imageList;
                 return pd_list;
             case "G마켓":
                 document = jsoup_conn(link);
                 pdName = document.getElementsByClass("itemtit").text();
-                price = document.getElementsByClass("price_real").text();
+                price = document.select("div.price span.price_innerwrap strong.price_real").text();
+                images = document.select(".box__viewer-container .viewer li.on img");
+                for (Element image : images) {
+                    String imageUrl = image.attr("src");
+                    imageList.add(imageUrl);
+                }
                 pd_list[0] = pdName;
                 pd_list[1] = price;
+                pd_list[2] = imageList;
                 return pd_list;
             case "인터파크":
                 document = jsoup_conn(link);
                 pdName = document.getElementsByTag("title").text().split(" - ")[0];
-                // price = document.select("span.salePrice.em").text();
+                price = document.select("span.salePrice em").text();
+                images = document.select("div.viewImage div.bx-wrapper div.bx-viewport ul.resized img");
+                for (Element image1 : images) {
+                    String imageUrl = image1.attr("src");
+                    imageList.add(imageUrl);
+                }
                 pd_list[0] = pdName;
-                // pd_list[1] = price;
+                pd_list[1] = price;
+                pd_list[2] = imageList;
                 return pd_list;
             case "e마트":
                 document = jsoup_conn(link);
-                pdName = document.getElementsByClass("cdtl_info_tit_name").text();
+                pdName = document.getElementsByClass("cdtl_info_tit_txt").text();
                 price = document.select("em.ssg_price").first().text();
+                images = document.select("div.cdtl_product_representative_image div.cdtl_item_image img");
+                for (Element image1 : images) {
+                    String imageUrl = image1.attr("src");
+                    imageList.add(imageUrl);
+                }
                 pd_list[0] = pdName;
                 pd_list[1] = price;
+                pd_list[2] = imageList;
                 return pd_list;
             case "신세계몰":
                 document = jsoup_conn(link);
-                pdName = document.getElementsByClass("cdtl_info_tit_name").text();
+                pdName = document.getElementsByClass("cdtl_info_tit_txt").text();
                 price = document.select("em.ssg_price").first().text();
+                images = document.select("div.cdtl_product_representative_image div.cdtl_item_image img");
+                for (Element image1 : images) {
+                    String imageUrl = image1.attr("src");
+                    imageList.add(imageUrl);
+                }
                 pd_list[0] = pdName;
                 pd_list[1] = price;
+                pd_list[2] = imageList;
                 return pd_list;
         }
         return null;

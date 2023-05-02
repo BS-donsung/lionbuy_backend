@@ -14,7 +14,7 @@ public interface CrawlingService {
 
     FileMake fm = new FileMake();
 
-    String[] getKeyword(String url);
+    Object[] getKeyword(String url);
 
     void periodic_crawling();
 
