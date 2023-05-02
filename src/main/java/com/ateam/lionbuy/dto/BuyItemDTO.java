@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BuyItemDTO {
 
+  private Long bno;
   private String userEmail;
   private String pdName;
   private Long price;

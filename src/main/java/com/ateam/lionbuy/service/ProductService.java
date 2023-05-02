@@ -14,9 +14,9 @@ public interface ProductService {
     
     List<ProductDTO> findByTags(String[] tags);
 
-    Map<String, Object> getProduct(String pd_name);
+    Map<String, Object> getProduct(String pdname);
 
-    ProductMallDTO getLowProduct_mall(String pd_name);
+    ProductMallDTO getLowProduct_mall(String pdname);
 
     default ProductDTO product_build_dto(Product product){
         ProductDTO productDTO = ProductDTO.builder()
@@ -30,6 +30,7 @@ public interface ProductService {
 
     default ProductLowpriceDTO lowprice_build_dto(ProductLowprice productLowprice) {
         ProductLowpriceDTO productLowpriceDTO = ProductLowpriceDTO.builder()
+            .plno(productLowprice.getPlno())
             .pdName(productLowprice.getProduct().getPdname())
             .pdLowprice(Long.valueOf(productLowprice.getPdlowprice()))
             .nowDate(productLowprice.getNowdate())
@@ -39,6 +40,7 @@ public interface ProductService {
 
     default ProductMallDTO mall_build_dto(ProductMall productMall) {
         ProductMallDTO productMallDTO = ProductMallDTO.builder()
+            .pmno(productMall.getPmno())
             .pdName(productMall.getProduct().getPdname())
             .mallName(productMall.getMallname())
             .price(productMall.getPrice())

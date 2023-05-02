@@ -15,7 +15,7 @@ public interface BuyItemService {
 
   List<BuyItemDTO> getAccountbook(Long month, Long year, String userEmail);
 
-  void deleteBuyItem(String pdName, LocalDate buyDate);
+  void deleteBuyItem(String pdName, LocalDate buyDate, String userEmail);
 
   default BuyItem buyItem_build_entity(BuyItemDTO buyItemDTO, UserInfo userInfo, Product product) {
     BuyItem buyItem = BuyItem.builder()
@@ -30,6 +30,7 @@ public interface BuyItemService {
 
   default BuyItemDTO buyItem_build_dto(BuyItem buyItem) {
     BuyItemDTO buyItemDTO = BuyItemDTO.builder()
+        .bno(buyItem.getBno())
         .userEmail(buyItem.getUserinfo().getUseremail())
         .pdName(buyItem.getProduct().getPdname())
         .price(buyItem.getPrice())
