@@ -2,7 +2,7 @@ package com.ateam.lionbuy.security.dto
 
 import org.springframework.security.core.Authentication
 
-open class AuthDTO(
+data class AuthDTO(
     val principal : String = "",
     val credential : String = ""
 )
