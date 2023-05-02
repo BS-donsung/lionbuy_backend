@@ -13,4 +13,5 @@ public class LinkDTO {
     
     private String pdName;
     private String price;
+    private Object imageList;
 }
