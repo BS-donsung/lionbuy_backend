@@ -25,16 +25,16 @@ public class UserInfo {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long usernum;
+    Long usernum;
     
     @Column(unique = true)
-    private String useremail;
+    String useremail;
 
-    private String userpw;
-    private String username;
-    private String usergender;
-    private String userbirth;
-    private LocalDate joindate;
+    String userpw;
+    String username;
+    String usergender;
+    String userbirth;
+    LocalDate joindate;
     
     @PrePersist
     public void PrePersist() {
