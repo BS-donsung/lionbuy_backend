@@ -1,4 +1,4 @@
-package com.ateam.lionbuy.security.service
+package com.ateam.lionbuy.security.service;
 
 import com.ateam.lionbuy.entity.UserInfo
 import com.ateam.lionbuy.repository.UserRepository
@@ -24,11 +24,7 @@ class UserServiceByLocal
 }
 
 fun CreateUserDTO.toEntity(): UserInfo {
-    return UserInfo.builder()
-        .username(this.username)
-        .useremail(this.principal)
-        .userpw(this.credential)
-        .build()
+    return UserInfo(null, this.username, this.principal, this.credential)
 }
 
 fun UserInfo.toResponseAuthDTO() : ResponseAuthDTO =

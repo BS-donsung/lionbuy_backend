@@ -22,19 +22,26 @@ import lombok.ToString;
 @Getter
 @ToString
 public class UserInfo {
-    
+
+    public UserInfo(Long usernum, String username, String useremail, String userpw) {
+        this.usernum = usernum;
+        this.username = username;
+        this.useremail = useremail;
+        this.userpw = userpw;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long usernum;
+    public Long usernum;
     
     @Column(unique = true)
-    String useremail;
+    public String useremail;
 
-    String userpw;
-    String username;
-    String usergender;
-    String userbirth;
-    LocalDate joindate;
+    public String userpw;
+    public String username;
+    public String usergender;
+    public String userbirth;
+    public LocalDate joindate;
     
     @PrePersist
     public void PrePersist() {

@@ -9,6 +9,8 @@ import jakarta.servlet.http.Cookie
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.ResponseCookie
+import org.springframework.http.ResponseCookie.ResponseCookieBuilder
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.core.Authentication
@@ -67,14 +69,12 @@ class SecurityBuildConfig
         }
     }
 
-    fun generateSetCookieString( username : String ) : Cookie {
-//        val bearerJWTToken = jwtUtil.createBearerJWT( mapOf( "username" to authentication.name ) )
+    fun generateResponseCookie( username : String ) : ResponseCookie {
         val jwtToken = jwtUtil.createJWT( mapOf( "username" to username ) )
-        return with(Cookie("access_token", jwtToken)) {
-            this.maxAge = (jwtUtil.defaultExpiredMils / 100).toInt()
-            this.isHttpOnly = true
-            this.secure= true
-            this
-        }
+        return ResponseCookie.from("access_token", jwtToken)
+            .maxAge( (jwtUtil.defaultExpiredMils / 100) )
+            .httpOnly(true)
+            .secure(true)
+            .build()
     }
 }

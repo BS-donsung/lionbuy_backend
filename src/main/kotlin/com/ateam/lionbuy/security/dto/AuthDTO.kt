@@ -15,8 +15,8 @@ open class ResponseAuthDTO (
 fun AuthDTO.toAuthentication() : Authentication =
     JWTAuthToken("", principal, credential, mutableListOf(), true)
 
-open class CreateUserDTO(
-    val username : String,
-    principal: String,
-    credential: String
-) : AuthDTO(principal, credential)
+data class CreateUserDTO(
+    val username : String = "",
+    val principal: String = "",
+    val credential: String = ""
+)

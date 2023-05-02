@@ -12,6 +12,7 @@ import com.ateam.lionbuy.security.util.JWTUtil
 import com.ateam.lionbuy.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
+import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -22,18 +23,23 @@ class AuthController
     val userServiceByLocal: UserServiceByLocal,
     val securityConfig : SecurityBuildConfig
 ){
-    @PostMapping("/register")
-    fun `register account`( dto : CreateUserDTO ) : ResponseEntity<ResponseAuthDTO> {
+    @GetMapping("/auth")
+    fun `test01`() = "auth";
+    @GetMapping("/auth/test")
+    fun `test02`() = "test";
+
+    @PostMapping(value = arrayOf("/register", "/auth/register"))
+    fun `register account`(@RequestBody dto : CreateUserDTO ) : ResponseEntity<ResponseAuthDTO> {
         val opt = userServiceByLocal.register(dto)
         return if(opt.isEmpty) {
             ResponseEntity.status(409).build<ResponseAuthDTO>()
         } else {
             val userDTO = opt.get()
-            val cookie = securityConfig.generateSetCookieString(userDTO.username)
+            val cookie = securityConfig.generateResponseCookie(userDTO.username)
             val header = HttpHeaders().apply {
-                this.add("Set-Cookie", cookie.toString())
+                this.add(HttpHeaders.SET_COOKIE, cookie.toString())
             }
-            ResponseEntity.ok().headers(header).body( userDTO )
+            ResponseEntity.status(201).headers(header).body( userDTO )
         }
     }
 
