@@ -58,8 +58,19 @@ class SecurityBuildConfig
 
     fun generateSetCookieString( authentication : Authentication ) : Cookie {
 //        val bearerJWTToken = jwtUtil.createBearerJWT( mapOf( "username" to authentication.name ) )
-        val bearerJWTToken = jwtUtil.createJWT( mapOf( "username" to authentication.name ) )
-        return with(Cookie("access_token", bearerJWTToken)) {
+        val jwtToken = jwtUtil.createJWT( mapOf( "username" to authentication.name ) )
+        return with(Cookie("access_token", jwtToken)) {
+            this.maxAge = (jwtUtil.defaultExpiredMils / 100).toInt()
+            this.isHttpOnly = true
+            this.secure= true
+            this
+        }
+    }
+
+    fun generateSetCookieString( username : String ) : Cookie {
+//        val bearerJWTToken = jwtUtil.createBearerJWT( mapOf( "username" to authentication.name ) )
+        val jwtToken = jwtUtil.createJWT( mapOf( "username" to username ) )
+        return with(Cookie("access_token", jwtToken)) {
             this.maxAge = (jwtUtil.defaultExpiredMils / 100).toInt()
             this.isHttpOnly = true
             this.secure= true

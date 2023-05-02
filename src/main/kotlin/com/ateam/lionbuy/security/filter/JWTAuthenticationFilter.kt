@@ -18,8 +18,7 @@ class JWTAuthenticationFilter(
 ): AbstractAuthenticationProcessingFilter(
     OrRequestMatcher(
         AntPathRequestMatcher("/login"),
-        AntPathRequestMatcher("/auth/login")
-        )
+        AntPathRequestMatcher("/auth/login") )
 ) {
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
         val parsedData = objectMapper.readValue<AuthDTO>(request.getBody())
