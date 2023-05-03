@@ -1,12 +1,12 @@
 package com.ateam.lionbuy.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ateam.lionbuy.dto.ProductDTO;
 import com.ateam.lionbuy.dto.WishItemDTO;
@@ -36,8 +37,12 @@ public class WishItemController {
 
   @PostMapping
   public ResponseEntity<String> add_wishList(@RequestBody WishItemDTO wishItemDTO) {
-    wService.addWishList(wishItemDTO);
-    return ResponseEntity.ok().body("성공");
+    try {
+      wService.addWishList(wishItemDTO);
+      return ResponseEntity.ok().body("성공");
+    } catch (Exception e) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WishItem Not Found");
+    }
   }
 
   @GetMapping(value = "")
@@ -48,8 +53,12 @@ public class WishItemController {
 
   @GetMapping(value = "/detail")
   public ResponseEntity<Map<String, Object>> wishDetail(@RequestParam("pdName") String pdName) {
-    Map<String, Object> wishProductDetail = pService.getProduct(pdName);
-    return ResponseEntity.ok().body(wishProductDetail);
+    try {
+      Map<String, Object> wishProductDetail = pService.getProduct(pdName);
+      return ResponseEntity.ok().body(wishProductDetail);
+    } catch (Exception e) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WishDetail Not Found");
+    }
   }
 
   @DeleteMapping(value = "")
