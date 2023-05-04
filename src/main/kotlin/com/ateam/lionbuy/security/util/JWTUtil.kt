@@ -15,7 +15,8 @@ enum class JWTStatus {
 class JWTUtil(
     val secretKey : String,
     val algorithm : String = "HS512",
-    val defaultExpiredMils : Long = 100 * 60 * 36
+    val defaultExpiredMils : Long = 1000 * 60 * 60 * 12
+
 ) {
     val parser : JwtParser by lazy { Jwts.parserBuilder().setSigningKey(this.secretKey.toByteArray()).build() }
     val jwtKey : SecretKey by lazy { SecretKeySpec(this.secretKey.toByteArray(),SignatureAlgorithm.HS512.jcaName ) }

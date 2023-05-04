@@ -40,6 +40,7 @@ public class CrawlingController {
             .pdName(pd_list[0])
             .price(pd_list[1])
             .build();
+
         return ResponseEntity.ok().body(linkDTO);
     }
 

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseCookie.ResponseCookieBuilder
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.core.Authentication
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
@@ -33,7 +34,7 @@ class SecurityBuildConfig
         }
 
     @Bean
-    fun passwordEncoder() : PasswordEncoder = NoOpPasswordEncoder.getInstance()
+    fun `inject passwordEncoder`() : PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
     fun `inject TokenFilter`(jwtUtil: JWTUtil, objectMapper: ObjectMapper) : JWTParsingFilter =
