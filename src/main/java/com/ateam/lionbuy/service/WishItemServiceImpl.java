@@ -31,8 +31,8 @@ public class WishItemServiceImpl implements WishItemService {
   private ProductRepository pRepository;
 
   @Override
-  public String addWishList(WishItemDTO wishItemDTO) {
-    UserInfo userInfo = uRepository.getInfo(wishItemDTO.getUserEmail()).get();
+  public String addWishList(WishItemDTO wishItemDTO, String useremail) {
+    UserInfo userInfo = uRepository.getInfo(useremail).get();
     Product product = pRepository.getPno(wishItemDTO.getPdName()).get();
     WishItem wishItem = wishItem_build_entity(product, userInfo, wishItemDTO);
     wRepository.save(wishItem);

@@ -12,7 +12,7 @@ import com.ateam.lionbuy.entity.WishItem;
 
 public interface WishItemService {
 
-  String addWishList(WishItemDTO wishItemdto);
+  String addWishList(WishItemDTO wishItemdto, String useremail);
 
   List<ProductDTO> userProductList(String userEmail);
 
@@ -22,8 +22,6 @@ public interface WishItemService {
     WishItem wishItem = WishItem.builder()
         .userinfo(userInfo)
         .product(product)
-        .priority(wishItemDTO.getPriority())
-        .choicedate(wishItemDTO.getChoiceDate())
         .build();
     return wishItem;
   }

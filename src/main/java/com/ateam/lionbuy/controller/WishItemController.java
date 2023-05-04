@@ -37,9 +37,9 @@ public class WishItemController {
   private final ProductService pService;
 
   @PostMapping
-  public ResponseEntity<String> add_wishList(@RequestBody WishItemDTO wishItemDTO) {
+  public ResponseEntity<String> add_wishList(Authentication auth, @RequestBody WishItemDTO wishItemDTO) {
     try {
-      wService.addWishList(wishItemDTO);
+      wService.addWishList(wishItemDTO, String.valueOf(auth.getPrincipal()));
       return ResponseEntity.ok().body("성공");
     } catch (Exception e) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WishItem Not Found");
