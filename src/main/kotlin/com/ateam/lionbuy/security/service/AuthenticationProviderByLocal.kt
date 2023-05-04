@@ -1,6 +1,7 @@
 package com.ateam.lionbuy.security.service
 
 import com.ateam.lionbuy.security.dto.JWTAuthToken
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.BadCredentialsException
@@ -15,16 +16,18 @@ class AuthenticationProviderByLocal
     val userDetailsServiceByLocal: UserDetailsServiceByLocal,
     val passwordEncoder: PasswordEncoder
 ) : AuthenticationProvider {
+
+    val logger = LoggerFactory.getLogger(AuthenticationProviderByLocal::class.java)
     override fun authenticate(authentication: Authentication): Authentication {
         val principal = authentication.principal.toString()
         val credentials = authentication.credentials.toString()
 
         val queryResult = userDetailsServiceByLocal.loadUserByUsername(principal)
-
-        return  if( passwordEncoder.matches(credentials, queryResult.password) )
-                    JWTAuthToken(queryResult.username, principal, credentials, mutableListOf(), true)
-                else
-                    throw BadCredentialsException("password not matched")
+        return if( passwordEncoder.matches(credentials, queryResult.password) ) {
+            JWTAuthToken(queryResult.username, principal, credentials, mutableListOf(), true)
+        } else {
+            throw BadCredentialsException("password not matched")
+        }
     }
 
     override fun supports(authentication: Class<*>?): Boolean =

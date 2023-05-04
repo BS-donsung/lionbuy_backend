@@ -40,8 +40,8 @@ class SecurityConfig {
             }
 
             this.authorizeHttpRequests().anyRequest().permitAll()
-//            TestSetting
-//            this.authorizeHttpRequests().anyRequest().authenticated()
+
+//                this.authorizeHttpRequests().anyRequest().authenticated()
             this.build()
         }
 

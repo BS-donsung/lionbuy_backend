@@ -21,11 +21,13 @@ class JWTParsingFilter(
         filterChain: FilterChain
     ) {
         val cookie = request.getCookieFromRequest("access_token")
+
         if(cookie != null) {
             val parsingResultFromJWT = jwtUtil.parsingJWT(cookie.value)
-            parsingResultFromJWT.ifPresent {
-                it["username"]?.let {
-                    SecurityContextHolder.getContext().authentication = JWTAuthToken(it, "", "", mutableListOf(), true)
+            parsingResultFromJWT.ifPresent { keyValue ->
+                keyValue["username"]?.let {
+                    SecurityContextHolder.getContext().authentication =
+                        JWTAuthToken("", it, "", mutableListOf(), true)
                 }
             }
         }

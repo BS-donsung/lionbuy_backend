@@ -41,15 +41,10 @@ public class CrawlingController {
             .price(String.valueOf(pd_list[1]))
             .imageList(pd_list[2])
             .build();
-<<<<<<< HEAD
-
-        return ResponseEntity.ok().body(linkDTO);
-=======
             return ResponseEntity.ok().body(linkDTO);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Url Not Found");
         }
->>>>>>> fddeeae63040e32490e597989c5ddecdf005084d
     }
 
     @GetMapping(value = "/tag")
