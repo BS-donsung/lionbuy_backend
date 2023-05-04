@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,9 +39,9 @@ public class BuyItemController {
   @GetMapping(value = "/accountbook")
   public ResponseEntity<List<BuyItemDTO>> get_accountbook(@RequestParam("month") Long month,
                                               @RequestParam("year") Long year,
-                                              @RequestParam("userEmail") String userEmail) {
+                                              Authentication auth) {
     try {
-      List<BuyItemDTO> buyItemDTOS = bService.getAccountbook(month, year, userEmail);
+      List<BuyItemDTO> buyItemDTOS = bService.getAccountbook(month, year, String.valueOf(auth.getPrincipal()));
       return ResponseEntity.ok().body(buyItemDTOS);
     } catch (Exception e) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BuyItem Not Found");
@@ -50,9 +51,9 @@ public class BuyItemController {
   @DeleteMapping(value = "/accountbook")
   public ResponseEntity<String> delete_buyItem(@RequestParam("product") String pdName,
                                                @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate buyDate,
-                                               @RequestParam("userEmail") String userEmail) {
+                                               Authentication auth) {
     try {
-      bService.deleteBuyItem(pdName, LocalDate.from(buyDate), userEmail);
+      bService.deleteBuyItem(pdName, LocalDate.from(buyDate), String.valueOf(auth.getPrincipal()));
       return ResponseEntity.ok().body("성공");
     } catch (Exception e) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BuyItem Not Found");

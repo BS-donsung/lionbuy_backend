@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,8 +47,8 @@ public class WishItemController {
   }
 
   @GetMapping(value = "")
-  public ResponseEntity<List<ProductDTO>> getWish(@RequestParam("userEmail") String userEmail) {
-    List<ProductDTO> userProductDtoData = wService.userProductList(userEmail);
+  public ResponseEntity<List<ProductDTO>> getWish(Authentication auth) {
+    List<ProductDTO> userProductDtoData = wService.userProductList(String.valueOf(auth.getPrincipal()));
     return ResponseEntity.ok().body(userProductDtoData);
   }
 
@@ -64,8 +65,8 @@ public class WishItemController {
   @DeleteMapping(value = "")
   public ResponseEntity<String> delete_wishItem(@RequestParam("product") String pdName,
                                                 @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate choiceDate,
-                                                @RequestParam("userEmail") String userEmail) {
-    wService.deleteWishItem(pdName, choiceDate, userEmail);
+                                                Authentication auth) {
+    wService.deleteWishItem(pdName, choiceDate, String.valueOf(auth.getPrincipal()));
     return ResponseEntity.ok().body("성공");
   }
 }
