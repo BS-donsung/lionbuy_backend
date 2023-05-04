@@ -32,8 +32,8 @@ public class BuyItemServiceImpl implements BuyItemService {
   private ProductRepository pRepository;
 
   @Override
-  public String addBuyList(BuyItemDTO buyItemDTO) {
-    UserInfo userInfo = uRepository.getInfo(buyItemDTO.getUserEmail()).get();
+  public String addBuyList(BuyItemDTO buyItemDTO, String useremail) {
+    UserInfo userInfo = uRepository.getInfo(useremail).get();
     Product product = pRepository.getPno(buyItemDTO.getPdName()).get();
     BuyItem buyItem = buyItem_build_entity(buyItemDTO, userInfo, product);
     bRepository.save(buyItem);

@@ -31,8 +31,8 @@ public class BuyItemController {
   private final BuyItemService bService;
 
   @PostMapping(value = "/add")
-  public ResponseEntity<String> add_buyList(@RequestBody BuyItemDTO buyItemdto){
-    bService.addBuyList(buyItemdto);
+  public ResponseEntity<String> add_buyList(@RequestBody BuyItemDTO buyItemdto, Authentication auth){
+    bService.addBuyList(buyItemdto, String.valueOf(auth.getPrincipal()));
     return ResponseEntity.ok().body("성공");
   }
 

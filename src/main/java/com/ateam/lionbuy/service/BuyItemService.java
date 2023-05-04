@@ -11,7 +11,7 @@ import com.ateam.lionbuy.entity.UserInfo;
 
 public interface BuyItemService {
 
-  String addBuyList(BuyItemDTO buyItemdto);
+  String addBuyList(BuyItemDTO buyItemdto, String useremail);
 
   List<BuyItemDTO> getAccountbook(Long month, Long year, String userEmail);
 
