@@ -132,7 +132,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                 Product getProduct;
                                 if(product2.isPresent()) {
                                     getProduct = product2.get();
-                                    pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice());
+                                    pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice(), product.getLowmallurl());
                                 }else {
                                     pRepository.save(product);
                                     getProduct = pRepository.getProduct(product.getPdname()).get();
@@ -172,7 +172,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                     Product getProduct;
                                     if(product2.isPresent()) {
                                         getProduct = product2.get();
-                                        pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice());
+                                        pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice(), product.getLowmallurl());
                                     }else {
                                         pRepository.save(product);
                                         getProduct = pRepository.getProduct(product.getPdname()).get();
@@ -201,7 +201,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                     Product getProduct;
                                     if(product2.isPresent()) {
                                         getProduct = product2.get();
-                                        pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice());
+                                        pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice(), product.getLowmallurl());
                                     }else {
                                         pRepository.save(product);
                                         getProduct = pRepository.getProduct(product.getPdname()).get();
@@ -233,7 +233,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                     String lowMallStr = ObjectMapper.writeValueAsString(returnMap.get("lowMallList"));
                                     List<Map<String, Object>> lowMallList = ObjectMapper.readValue(lowMallStr, new TypeReference<List<Map<String, Object>>>(){});
                                     for(Map<String, Object> lowMallMap : lowMallList) {
-                                        ProductMall mall = mall_build_entity(getProduct, returnMap, String.valueOf(lowMallMap.get("name")), Long.valueOf(String.valueOf(lowMallMap.get("price"))));
+                                        ProductMall mall = mall_build_entity(getProduct,String.valueOf(lowMallMap.get("name")), Long.valueOf(String.valueOf(lowMallMap.get("price"))));
                                         Optional<List<ProductMall>> mall2 = pmRepository.getMalldata(getProduct.getPno());
                                         if(mall2.isPresent()) {
                                             pmRepository.updateMallData(mall.getMallname(), mall.getPrice(), getProduct.getPno());
@@ -325,15 +325,25 @@ public class CrawlingServiceImpl implements CrawlingService{
 
                             // Map타입의 데이터를 Entity로 변환하여 디비에 저장하는 코드
                             // product_build 메서드는 CrawlingService 클래스에 있음
+                            Product getProduct;
                             Product product = product_build(returnMap);
                             Optional<Product> product2 = pRepository.getProduct(product.getPdname());
-                            Product getProduct;
                             if(product2.isPresent()) {
                                 getProduct = product2.get();
-                                pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice());
+                                pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice(), product.getLowmallurl());
                             }else {
                                 pRepository.save(product);
                                 getProduct = pRepository.getProduct(product.getPdname()).get();
+                            }
+                            ObjectMapper ObjectMapper = new ObjectMapper();
+                            String lowMallStr = ObjectMapper.writeValueAsString(returnMap.get("mallInfoCache"));
+                            Map<String, Object> lowMallMap = ObjectMapper.readValue(lowMallStr, new TypeReference<Map<String, Object>>(){});
+                            ProductMall mall = mall_build_entity(getProduct, String.valueOf(lowMallMap.get("name")), Long.valueOf(String.valueOf(returnMap.get("lowPrice"))));
+                            Optional<ProductMall> mall2 = pmRepository.getOneMalldata(getProduct.getPno());
+                            if(mall2.isPresent()) {
+                                pmRepository.updateMallData(mall.getMallname(), mall.getPrice(), getProduct.getPno());
+                            }else {
+                                pmRepository.save(mall);
                             }
 
                             // 데이터에 카테고리가 여러개의 key에 존재하고 있어서 한 String 변수에 뭉쳐서 디비에 넣은 코드
@@ -365,15 +375,25 @@ public class CrawlingServiceImpl implements CrawlingService{
                             // 쇼핑몰리스트의 값이 있는지 없는지의 기준으로 if문을 나누었음
                             if(returnMap.get("lowMallList") == null) {
                                 // 위에 코드와 같다
+                                Product getProduct;
                                 Product product = product_build(returnMap);
                                 Optional<Product> product2 = pRepository.getProduct(product.getPdname());
-                                Product getProduct;
                                 if(product2.isPresent()) {
                                     getProduct = product2.get();
-                                    pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice());
+                                    pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice(), product.getLowmallurl());
                                 }else {
                                     pRepository.save(product);
                                     getProduct = pRepository.getProduct(product.getPdname()).get();
+                                }
+                                ObjectMapper ObjectMapper = new ObjectMapper();
+                                String lowMallStr = ObjectMapper.writeValueAsString(returnMap.get("mallInfoCache"));
+                                Map<String, Object> lowMallMap = ObjectMapper.readValue(lowMallStr, new TypeReference<Map<String, Object>>(){});
+                                ProductMall mall = mall_build_entity(getProduct, String.valueOf(lowMallMap.get("name")), Long.valueOf(String.valueOf(returnMap.get("lowPrice"))));
+                                Optional<ProductMall> mall2 = pmRepository.getOneMalldata(getProduct.getPno());
+                                if(mall2.isPresent()) {
+                                    pmRepository.updateMallData(mall.getMallname(), mall.getPrice(), getProduct.getPno());
+                                }else {
+                                    pmRepository.save(mall);
                                 }
                                 String categories = "";
                                 for (int z = 0; z < 4; z++) {
@@ -394,12 +414,12 @@ public class CrawlingServiceImpl implements CrawlingService{
                             }else{
                                 // 위에 코드와 같으나 차이점이 있다면 요기에 들어오는 데이터들은 쇼핑몰 데이터가 있어서
                                 // product_mall 테이블에 쇼핑몰 데이터를 저장
-                                Product product = product_build(returnMap);
+                                Product product = product_build2(returnMap);
                                 Optional<Product> product2 = pRepository.getProduct(product.getPdname());
                                 Product getProduct;
                                 if(product2.isPresent()) {
                                     getProduct = product2.get();
-                                    pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice());
+                                    pRepository.updateProductData(getProduct.getPno(), product.getImageurl(), product.getPdlowprice(), product.getLowmallurl());
                                 }else {
                                     pRepository.save(product);
                                     getProduct = pRepository.getProduct(product.getPdname()).get();
@@ -420,7 +440,6 @@ public class CrawlingServiceImpl implements CrawlingService{
                                 ProductLowprice lowprice = lowprice_build(getProduct, returnMap);
                                 plRepository.save(lowprice);
                                 log.info("--------3번--------");
-
                                 // 요부분이 쇼핑몰 데이터를 저장하는 부분
                                 // 쇼핑몰 데이터가 Object 타입으로 되어있지만 실제론 List<Map<String, Object>> 타입으로 되어있다
                                 // 하나 하나 데이터를 따로 넣고 싶어서 ObjectMapper 클래스를 사용하여
@@ -431,7 +450,7 @@ public class CrawlingServiceImpl implements CrawlingService{
                                 String lowMallStr = ObjectMapper.writeValueAsString(returnMap.get("lowMallList"));
                                 List<Map<String, Object>> lowMallList = ObjectMapper.readValue(lowMallStr, new TypeReference<List<Map<String, Object>>>(){});
                                 for(Map<String, Object> lowMallMap : lowMallList) {
-                                    ProductMall mall = mall_build_entity(getProduct, returnMap, String.valueOf(lowMallMap.get("name")), Long.valueOf(String.valueOf(lowMallMap.get("price"))));
+                                    ProductMall mall = mall_build_entity(getProduct, String.valueOf(lowMallMap.get("name")), Long.valueOf(String.valueOf(lowMallMap.get("price"))));
                                     Optional<List<ProductMall>> mall2 = pmRepository.getMalldata(getProduct.getPno());
                                     if(mall2.isPresent()) {
                                         pmRepository.updateMallData(mall.getMallname(), mall.getPrice(), getProduct.getPno());

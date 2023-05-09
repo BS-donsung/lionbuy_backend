@@ -20,6 +20,9 @@ public interface ProductMallRepository extends JpaRepository<ProductMall, Long>{
     @Query("select pm from ProductMall pm where pm.product.pno=:pno")
     Optional<List<ProductMall>> getMalldata(@Param("pno") Long pno);
 
+    @Query("select pm from ProductMall pm where pm.product.pno=:pno")
+    Optional<ProductMall> getOneMalldata(@Param("pno") Long pno);
+
     @Transactional
     @Modifying
     @Query("update ProductMall pm set pm.mallname=:mallname, pm.price=:price where pm.product.pno=:pno")
