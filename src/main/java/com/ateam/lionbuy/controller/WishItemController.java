@@ -3,6 +3,7 @@ package com.ateam.lionbuy.controller;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ateam.lionbuy.dto.ProductDTO;
+import com.ateam.lionbuy.dto.ProductLowpriceDTO;
+import com.ateam.lionbuy.dto.ProductMallDTO;
 import com.ateam.lionbuy.dto.WishItemDTO;
 import com.ateam.lionbuy.service.ProductService;
 import com.ateam.lionbuy.service.WishItemService;
@@ -34,7 +37,7 @@ public class WishItemController {
   private final WishItemService wService;
 
   @Autowired
-  private final ProductService pService;
+  private final ProductService productService;
 
   @PostMapping
   public ResponseEntity<String> add_wishList(Authentication auth, @RequestBody WishItemDTO wishItemDTO) {
@@ -53,11 +56,43 @@ public class WishItemController {
   }
 
   @GetMapping(value = "/detail")
-  public ResponseEntity<Map<String, Object>> wishDetail(@RequestParam("pdName") String pdName) {
-    try {
-      Map<String, Object> wishProductDetail = pService.getProduct(pdName);
-      return ResponseEntity.ok().body(wishProductDetail);
-    } catch (Exception e) {
+  public ResponseEntity<Object> wishDetail(@RequestParam("item") String pdName, @RequestParam("datatype") String datatype) {
+    if(datatype.equals("product")) {
+      try {
+          ProductDTO productData = productService.productData(pdName);
+          return ResponseEntity.ok().body(productData);
+      } catch (Exception e) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WishDetail Not Found");
+      }
+    }else if(datatype.equals("lowmall")) {
+        try {
+            ProductMallDTO productlowmallData = productService.lowmallData(pdName);
+            return ResponseEntity.ok().body(productlowmallData);
+        } catch (Exception e) {
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WishDetail Not Found");
+        }
+    }else if(datatype.equals("related")) {
+        try {
+            List<ProductDTO> productrelatedData = productService.relatedData(pdName);
+            return ResponseEntity.ok().body(productrelatedData);
+        } catch (Exception e) {
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WishDetail Not Found");
+        }
+    }else if(datatype.equals("lowprice")) {
+        try {
+            List<ProductLowpriceDTO> productlowpriceData = productService.lowpriceData(pdName);
+            return ResponseEntity.ok().body(productlowpriceData);
+        } catch (Exception e) {
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WishDetail Not Found");
+        }
+    }else if(datatype.equals("tag")) {
+        try {
+            Set<String> producttagData = productService.categoriesData(pdName);
+            return ResponseEntity.ok().body(producttagData);
+        } catch (Exception e) {
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WishDetail Not Found");
+        }
+    }else{
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WishDetail Not Found");
     }
   }

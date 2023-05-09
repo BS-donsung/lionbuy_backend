@@ -2,6 +2,7 @@ package com.ateam.lionbuy.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.ateam.lionbuy.dto.ProductDTO;
 import com.ateam.lionbuy.dto.ProductLowpriceDTO;
@@ -15,6 +16,16 @@ public interface ProductService {
     List<ProductDTO> findByTags(String[] tags);
 
     Map<String, Object> getProduct(String pdname);
+
+    ProductDTO productData(String pdname);
+
+    List<ProductDTO> relatedData(String pdname);
+
+    ProductMallDTO lowmallData(String pdname);
+
+    List<ProductLowpriceDTO> lowpriceData(String pdname);
+
+    Set<String> categoriesData(String pdname);
 
     ProductMallDTO getLowProduct_mall(String pdname);
 

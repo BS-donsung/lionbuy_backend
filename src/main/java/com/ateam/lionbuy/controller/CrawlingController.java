@@ -1,7 +1,7 @@
 package com.ateam.lionbuy.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ateam.lionbuy.dto.LinkDTO;
+import com.ateam.lionbuy.dto.ProductDTO;
+import com.ateam.lionbuy.dto.ProductLowpriceDTO;
+import com.ateam.lionbuy.dto.ProductMallDTO;
 import com.ateam.lionbuy.service.CrawlingService;
 import com.ateam.lionbuy.service.ProductService;
 
@@ -47,13 +50,45 @@ public class CrawlingController {
         }
     }
 
-    @GetMapping(value = "/tag")
-    public ResponseEntity<Map<String, Object>> start_crawling(@RequestParam("item") String pdName) {
-        try {
-            crawlingService.start_crawling(pdName);
-            Map<String, Object> productDetail = productService.getProduct(pdName);
-            return ResponseEntity.ok().body(productDetail);
-        } catch (Exception e) {
+    @GetMapping(value = "/product")
+    public ResponseEntity<Object> start_crawling(@RequestParam("item") String pdName, @RequestParam("datatype") String datatype) {
+        if(datatype.equals("product")) {
+            try {
+                crawlingService.start_crawling(pdName);
+                ProductDTO productData = productService.productData(pdName);
+                return ResponseEntity.ok().body(productData);
+            } catch (Exception e) {
+                return ResponseEntity.ok().body(null);
+            }
+        }else if(datatype.equals("lowmall")) {
+            try {
+                ProductMallDTO productlowmallData = productService.lowmallData(pdName);
+                return ResponseEntity.ok().body(productlowmallData);
+            } catch (Exception e) {
+                return ResponseEntity.ok().body(null);
+            }
+        }else if(datatype.equals("related")) {
+            try {
+                List<ProductDTO> productrelatedData = productService.relatedData(pdName);
+                return ResponseEntity.ok().body(productrelatedData);
+            } catch (Exception e) {
+                return ResponseEntity.ok().body(null);
+            }
+        }else if(datatype.equals("lowprice")) {
+            try {
+                List<ProductLowpriceDTO> productlowpriceData = productService.lowpriceData(pdName);
+                return ResponseEntity.ok().body(productlowpriceData);
+            } catch (Exception e) {
+                return ResponseEntity.ok().body(null);
+            }
+        }else if(datatype.equals("tag")) {
+            try {
+                Set<String> producttagData = productService.categoriesData(pdName);
+                return ResponseEntity.ok().body(producttagData);
+            } catch (Exception e) {
+                return ResponseEntity.ok().body(null);
+            }
+        }else{
             return ResponseEntity.ok().body(null);
         }
     }

@@ -23,5 +23,7 @@ public class Product {
     private String pdname;
     private String imageurl;
     private String pdlowprice;
+
+    @Column(length = 1000000)
     private String lowmallurl;
 }

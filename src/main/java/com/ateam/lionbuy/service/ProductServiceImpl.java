@@ -128,5 +128,93 @@ public class ProductServiceImpl implements ProductService{
         ProductMallDTO productMallDTO = mall_build_dto(productMall);
         return productMallDTO;
     }
+
+    @Override
+    public ProductDTO productData(String pdname) {
+        Optional<Product> product = pRepository.getPno(pdname);
+        ProductDTO productDTO;
+        if(product.isPresent()) {
+            Product productData = product.get();
+            productDTO = product_build_dto(productData);
+            return productDTO;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<ProductDTO> relatedData(String pdname) {
+        Optional<Product> product = pRepository.getPno(pdname);
+        if(product.isPresent()) {
+            Optional<List<Product>> relatedList = pRepository.getRelatedList(product.get().getPdname());
+            List<ProductDTO> related_DTO = new ArrayList<>();
+            List<Product> relatedListData;
+            if(relatedList.isPresent()) {
+                relatedListData = relatedList.get();
+                if (relatedListData.size()>0) {
+                    for (Product relatedProduct : relatedListData) {
+                        ProductDTO relatedproductDTO = product_build_dto(relatedProduct);
+                        related_DTO.add(relatedproductDTO);
+                    }
+                }
+                return related_DTO;
+            }else {
+                return null;
+            }
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public ProductMallDTO lowmallData(String pdname) {
+        Optional<Product> product = pRepository.getPno(pdname);
+        if(product.isPresent()) {
+            Optional<ProductMall> productMall = pMallRepository.getLowMall(product.get().getPno());
+            ProductMall productMallData;
+            if(productMall.isPresent()) {
+                productMallData = productMall.get();
+                ProductMallDTO productMallDTO = mall_build_dto(productMallData);
+                return productMallDTO;
+            }else {
+                return null;
+            }
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<ProductLowpriceDTO> lowpriceData(String pdname) {
+        Optional<Product> product = pRepository.getPno(pdname);
+        if(product.isPresent()) {
+            Optional<List<ProductLowprice>> productLowEntityList = pLowpriceRepository.getProductLowprice(product.get().getPno());
+            List<ProductLowpriceDTO> productLowDtoList = new ArrayList<ProductLowpriceDTO>();
+            List<ProductLowprice> productLowList;
+            if(productLowEntityList.isPresent()){
+                productLowList = productLowEntityList.get();
+                for (int i = 0; i < productLowList.size(); i++) {
+                    productLowDtoList.add(lowprice_build_dto(productLowList.get(i)));
+                }
+                return productLowDtoList;
+            }else {
+                return null;
+            }
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public Set<String> categoriesData(String pdname) {
+        Optional<Product> product = pRepository.getPno(pdname);
+        Set<String> tags;
+        if(product.isPresent()) {
+            tags = categoryService.relation_categories(product.get().getPno());
+            return tags;
+        }else {
+            return null;
+        }
+    }
     
 }
