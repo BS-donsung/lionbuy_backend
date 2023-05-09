@@ -17,4 +17,5 @@ public class ProductDTO {
     private String pdName;
     private String imageUrl;
     private String pdLowprice;
+    private String lowmallurl;
 }

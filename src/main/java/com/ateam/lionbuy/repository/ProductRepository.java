@@ -19,8 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 
     @Transactional
     @Modifying
-    @Query("update Product p set p.imageurl=:imageurl, p.pdlowprice=:pdlowprice where p.pno=:pno")
-    int updateProductData(@Param("pno") Long pno, @Param("imageurl") String imageurl, @Param("pdlowprice") String pdlowprice);
+    @Query("update Product p set p.imageurl=:imageurl, p.pdlowprice=:pdlowprice, p.lowmallurl=:lowmallurl where p.pno=:pno")
+    int updateProductData(@Param("pno") Long pno, @Param("imageurl") String imageurl, @Param("pdlowprice") String pdlowprice, @Param("lowmallurl") String lowmallurl);
 
     @Query("select p from Product p where p.pdname=:pdName")
     Optional<Product> getProduct(@Param("pdName") String pdName);

@@ -8,6 +8,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 public class Mall {
     
     public Object[] mall_parsing(String link) {
@@ -98,6 +101,19 @@ public class Mall {
                 pd_list[1] = price;
                 pd_list[2] = imageList;
                 return pd_list;
+            case "네이버스마트스토어":
+                document = jsoup_conn(link);
+                pdName = document.getElementsByClass("_22kNQuEXmb _copyable").text();
+                price = document.getElementsByClass("_1LY7DqCnwR").text();
+                images = document.select("div._367LI5Az0t img");
+                for (Element image1 : images) {
+                    String imageUrl = image1.attr("src");
+                    imageList.add(imageUrl);
+                }
+                pd_list[0] = pdName;
+                pd_list[1] = price;
+                pd_list[2] = imageList;
+                return pd_list;
         }
         return null;
     }
@@ -115,6 +131,8 @@ public class Mall {
             return "e마트";
         }else if(link.contains("shinsegaemall.ssg.com")) {
             return "신세계몰";
+        }else if(link.contains("smartstore.naver.com")){
+            return "네이버스마트스토어";
         }else {
             return null;
         }

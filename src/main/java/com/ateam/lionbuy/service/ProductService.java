@@ -24,6 +24,7 @@ public interface ProductService {
             .pdName(product.getPdname())
             .imageUrl(product.getImageurl())
             .pdLowprice(product.getPdlowprice())
+            .lowmallurl(product.getLowmallurl())
             .build();
         return productDTO;
     }

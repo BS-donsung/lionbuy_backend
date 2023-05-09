@@ -38,6 +38,16 @@ public interface CrawlingService {
             .pdname(String.valueOf(returnMap.get("productTitle")))
             .imageurl(String.valueOf(returnMap.get("imageUrl")))
             .pdlowprice(String.valueOf(returnMap.get("lowPrice")))
+            .lowmallurl(String.valueOf(returnMap.get("adcrUrl")))
+            .build();
+        return product;
+    }
+
+    default Product product_build2(Map<String, Object> returnMap) {
+        Product product = Product.builder()
+            .pdname(String.valueOf(returnMap.get("productTitle")))
+            .imageurl(String.valueOf(returnMap.get("imageUrl")))
+            .pdlowprice(String.valueOf(returnMap.get("lowPrice")))
             .build();
         return product;
     }
@@ -58,7 +68,7 @@ public interface CrawlingService {
         return lowprice;
     }
 
-    default ProductMall mall_build_entity(Product product, Map<String, Object> returnmap, String mallName, Long price) {
+    default ProductMall mall_build_entity(Product product, String mallName, Long price) {
         ProductMall mall = ProductMall.builder()
             .product(product)
             .mallname(mallName)

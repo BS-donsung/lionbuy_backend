@@ -23,4 +23,5 @@ public class Product {
     private String pdname;
     private String imageurl;
     private String pdlowprice;
+    private String lowmallurl;
 }
